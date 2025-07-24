@@ -10,10 +10,16 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::paginate(20);
-        return view('job.index',compact('jobs'));
+
+        $jobs = Job::query();
+        $jobs->when(request('search'),function($query){
+            $query->where('title','like','%'.request('search').'%')
+            ->orWhere('description','like','%'.request('search').'%');
+        });
+
+        return view('job.index',['jobs'=>$jobs->paginate(20)]);
     }
 
     /**
