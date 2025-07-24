@@ -1,7 +1,7 @@
 <x-card class="mb-4">
         <div class=" mb-4 flex justify-between">
-            <h2 class="text-lg font-medium">{{$job->title}}</h2>
-            <div class="text-slate-500">{{number_format($job->salary)}}</div>
+            <h2 class="text-lg font-meduim">{{$job->title}}</h2>
+            <div class="text-slate-500">${{number_format($job->salary)}}</div>
         </div>
         <div class="mb-4 flex justify-between text-sm text-slate-500 items-center">
             <div class="flex space-x-4">
