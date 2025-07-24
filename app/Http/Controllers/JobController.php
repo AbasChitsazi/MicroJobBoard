@@ -14,6 +14,8 @@ class JobController extends Controller
     {
 
         $jobs = Job::query();
+
+
         $jobs->when(request('search'), function ($query) {
             $query->where(function ($q) {
                 $q->where('title', 'like', '%' . request('search') . '%')
@@ -26,8 +28,11 @@ class JobController extends Controller
             ->when(request('max_salary'), function ($query) {
                 $query->where('salary', '<=', request('max_salary'));
             })
-            ->when(request('experience'),function($query){
+            ->when(request('experience'), function ($query) {
                 $query->where('experience', request('experience'));
+            })
+            ->when(request('category'), function ($query) {
+                $query->where('category', request('category'));
             });
 
         return view('job.index', ['jobs' => $jobs->paginate(20)]);
