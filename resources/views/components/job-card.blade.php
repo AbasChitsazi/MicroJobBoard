@@ -6,7 +6,7 @@
                 Posted on {{ $job->created_at->format('F j, Y') }}
             </p>
         </div>
-        <div class="text-slate-500">${{ number_format($job->salary) }}</div>
+        <div class="text-slate-700">${{ number_format($job->salary) }}</div>
     </div>
     <div class="mb-6 flex justify-between text-sm text-slate-500 items-center">
         <div class="flex space-x-4">
