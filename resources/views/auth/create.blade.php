@@ -24,7 +24,7 @@
                     <a href="#" class="text-indigo-600 hover:underline">Forgot password?</a>
                 </div>
             </div>
-            <x-button class="w-full bg-green-50 text-lg py-3">Login</x-button>
+            <x-button class="w-full bg-green-50 text-lg py-3 cursor-pointer hover:bg-slate-100">Login</x-button>
         </form>
     </x-card>
 </x-layout>

@@ -1,3 +1,3 @@
-<div class="rounded-md border px-2 py-1 hover:bg-slate-100">
+<div class="rounded-md border px-2 py-1 hover:bg-slate-100 duration-300">
     {{ $slot }}
 </div>

@@ -5,12 +5,12 @@
         <form x-ref="filters" id="filtering-form" action="{{ route('jobs.index') }}" method="GET">
             <div class="mb-4 grid grid-cols-2 gap-4">
                 <div>
-                    <div class="mb-1 font-semibold ">Search</div>
+                    <div class="mb-1 font-medium ">Search</div>
                     <x-text-input name="search" value="{{ request('search') }}" placeholder="Search for any text"
                         form-ref='filters' />
                 </div>
                 <div>
-                    <div class="mb-1 font-semibold ">Salary</div>
+                    <div class="mb-1 font-medium ">Salary</div>
                     <div class="flex space-x-2">
                         <x-text-input name="min_salary" value="{{ request('min_salary') }}" placeholder="From"
                             form-ref='filters' />
@@ -19,15 +19,15 @@
                     </div>
                 </div>
                 <div>
-                    <div class="mb-1 font-semibold ">Experience</div>
+                    <div class="mb-1 font-medium ">Experience</div>
                     <x-radio-group name="experience" :options="\App\Models\Job::$experience" />
                 </div>
                 <div>
-                    <div class="mb-1 font-semibold ">Category</div>
+                    <div class="mb-1 font-medium ">Category</div>
                     <x-radio-group name="category" :options="\App\Models\Job::$jobcategory" />
                 </div>
             </div>
-                <x-button class="w-full">Filter</x-button>
+                <x-button class="w-full cursor-pointer">Filter</x-button>
             </form>
     </x-card>
     @foreach ($jobs as $job)
