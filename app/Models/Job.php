@@ -69,8 +69,4 @@ class Job extends Model
             ->exists();
     }
 
-    public function getUserApplicationAttribute()
-    {
-        return $this->job_applications->where('user_id', auth()->id())->first();
-    }
 }

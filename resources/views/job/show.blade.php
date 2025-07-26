@@ -19,9 +19,6 @@
                     <div class="flex items-center justify-center gap-2">
                         <span>You Already Applied to this job</span>
                     </div>
-                    @if ($job->user_application)
-                        {{ $job->user_application->created_at->diffForHumans() }}
-                    @endif
                 </div>
             @endcan
         @endguest
