@@ -10,5 +10,10 @@
     @endif
     <input x-ref="input-{{ $name }}" type="{{ $type }}" placeholder="{{ $placeholder }}"
         name="{{ $name }}" value="{{ $value }}" id="{{ $name }}"
-        class=" pr-8 w-full rounded-md border-0 py-1.5 px-2.5 text-sm ring-2 ring-slate-300 placeholder:text-slate-400 focus:ring-3">
+        {{ $attributes->class(['w-full rounded-md border-0 py-1.5 px-3 text-sm ring-2 ring-slate-300 placeholder:text-slate-400 focus:ring-3']) }} />
+    @error($name)
+        <div class="mt-1 text-sm text-red-500">
+            {{ $message }}
+        </div>
+    @enderror
 </div>

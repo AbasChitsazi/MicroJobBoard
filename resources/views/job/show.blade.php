@@ -10,7 +10,7 @@
             </div>
         @else
             @can('apply', $job)
-                <x-link-button :href="route('job.application.create', $job)">
+                <x-link-button class="py-2.5 px-2.5 text-green-600" :href="route('job.application.create', $job)">
                     Apply
                 </x-link-button>
             @else
