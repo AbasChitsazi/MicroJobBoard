@@ -1,7 +1,9 @@
 <x-card class="mb-4 hover:shadow-lg transition-shadow duration-300">
     <div class=" mb-4 flex justify-between">
         <div>
-            <h2 class="text-lg font-medium">{{ $job->title }}</h2>
+            <a href="{{route('jobs.show',$job)}}">
+                <h2 class="text-lg font-medium hover:text-slate-800 transition 300">{{ $job->title }}</h2>
+            </a>
             <p class="text-sm text-gray-500">
                 Posted on {{ $job->created_at->format('F j, Y') }}
             </p>
