@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
 
 class MyjobApplicationController extends Controller
@@ -14,16 +15,20 @@ class MyjobApplicationController extends Controller
             [
                 'applications' => auth()
                     ->user()
-                    ->job_applications()
-                    ->with('job','job.employer')
+                    ->jobApplications()
+                    ->with([
+                        'job' => fn($q) => $q->withCount('jobApplications')->withAvg('jobApplications','expected_salary'),
+                        'job.employer'
+                        ])
                     ->latest()
                     ->get()
             ],
         );
     }
 
-    public function destroy(string $id)
+    public function destroy(JobApplication $myJobApplication)
     {
-        //
+        $myJobApplication->delete();
+        return redirect()->back()->with('success','Job Application Removed');
     }
 }

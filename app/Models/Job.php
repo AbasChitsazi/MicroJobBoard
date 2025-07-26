@@ -54,7 +54,7 @@ class Job extends Model
     {
         return $this->belongsTo(Employer::class);
     }
-    public function job_applications(): HasMany
+    public function jobApplications(): HasMany
     {
         return $this->hasMany(JobApplication::class);
     }
@@ -62,7 +62,7 @@ class Job extends Model
     {
         return $this->where('id', $this->id)
             ->whereHas(
-                'job_applications',
+                'jobApplications',
                 fn($q) => $q
                     ->where('user_id', '=', $user->id ?? $user)
             )
