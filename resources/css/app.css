@@ -9,6 +9,6 @@
     --font-sans: 'Pretendard', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
-body, html { scrollbar-width: none; -ms-overflow-style: none; }
+body, html , *{ scrollbar-width: none; -ms-overflow-style: none; }
 body::-webkit-scrollbar, html::-webkit-scrollbar { display: none; }
 
