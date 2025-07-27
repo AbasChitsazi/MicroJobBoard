@@ -28,16 +28,16 @@ A modern job board application built with Laravel that allows employers to post 
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](docs/homepage.png)
+<img src="docs/homepage.png" alt="Home Page" width="600"/>
 
 ### My Jobs page
-![My Jobs page](docs/my-jobs.png)
+<img src="docs/my-jobs.png" alt="My Jobs page" width="600"/>
 
 ### Job Application Page
-![Job Application Page](docs/job-application.png)
+<img src="docs/job-application.png" alt="Job Application Page" width="600"/>
 
 ### Job Apply Page
-![Job Apply Page](docs/job-apply.png)
+<img src="docs/job-apply.png" alt="Job Apply Page" width="600"/>
 
 
 
