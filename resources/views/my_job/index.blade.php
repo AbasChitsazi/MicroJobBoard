@@ -18,7 +18,7 @@
                                 <div class="text-xs text-slate-500">
                                     Applied {{ $application->created_at->diffForHumans() }}
                                 </div>
-                                <a href="#" class="inline-block text-sm text-indigo-600 hover:underline">
+                                <a href="{{route('download-cv',$application)}}" class="inline-block text-sm text-indigo-600 hover:underline">
                                     Download CV
                                 </a>
                             </div>
@@ -32,6 +32,7 @@
                 @empty
                     <div class="text-gray-500 italic">No applications yet.</div>
                 @endforelse
+                @if (!$job->deleted_at)
                 <div class="grid grid-cols-2 gap-2 w-full">
                     {{-- Edit --}}
                     <a href="{{ route('my-jobs.edit', $job) }}"
@@ -65,6 +66,7 @@
                         </button>
                     </form>
                 </div>
+                @endif
             </div>
         </x-job-card>
     @empty

@@ -2,7 +2,11 @@
     <div class=" mb-4 flex justify-between">
         <div>
             <a href="{{route('jobs.show',$job)}}">
-                <h2 class="text-lg font-medium hover:text-slate-800 transition 300">{{ $job->title }}</h2>
+                @if ($job->deleted_at)
+                <h2 class="text-lg line-through font-medium hover:text-slate-800 transition 300">{{ $job->title }}</h2>
+                @else
+                <h2 class="text-lg  font-medium hover:text-slate-800 transition 300">{{ $job->title }}</h2>
+                @endif
             </a>
             <p class="text-sm text-gray-500">
                 Posted on {{ $job->created_at->format('F j, Y') }}

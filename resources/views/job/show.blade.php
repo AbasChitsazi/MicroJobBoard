@@ -9,21 +9,31 @@
                 Sign in for Apply
             </div>
         @else
-            @can('apply', $job)
-            <div >
-                <x-link-button class="px-3 py-2.5 text-green-600" :href="route('job.application.create', $job)">
-                    Apply
-                </x-link-button>
-            </div>
-            @else
+            @php
+                $isOwner = optional($job->employer)->user_id === auth()->id();
+                $alreadyApplied = $job->hasUserApplied(auth()->user());
+            @endphp
+
+            @if ($isOwner)
+                <div
+                    class="text-center text-sm font-medium text-yellow-600 border-2 border-yellow-700 bg-yellow-100 rounded-md p-3">
+                    You cannot apply to your own job.
+                </div>
+            @elseif ($alreadyApplied)
                 <div
                     class="text-center text-sm font-medium text-green-600 border-2 border-green-700 bg-green-100 rounded-md p-3">
-                    <div class="flex items-center justify-center gap-2">
-                        <span>You Already Applied to this job</span>
-                    </div>
+                    You already applied to this job.
                 </div>
-            @endcan
+            @else
+                <div>
+                    <x-link-button class="px-3 py-2.5 text-green-600" :href="route('job.application.create', $job)">
+                        Apply
+                    </x-link-button>
+                </div>
+            @endif
         @endguest
+
+
     </x-job-card>
 
     <x-card class="mb-4 hover:shadow-lg transition-shadow duration-300">

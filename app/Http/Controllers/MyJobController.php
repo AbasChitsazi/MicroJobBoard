@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\JobRequest;
 use App\Models\Job;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Http\Request;
+use App\Models\JobApplication;
+use App\Http\Requests\JobRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class MyJobController extends Controller
 {
 
     use AuthorizesRequests;
+
 
     public function index()
     {
@@ -71,5 +74,22 @@ class MyJobController extends Controller
     {
         $myJob->delete();
         return redirect()->route('my-jobs.index')->with('success', 'Job Deleted Successfully');
+    }
+    public function downloadcv(JobApplication $application)
+    {
+
+        if(is_null($application->job)){
+        abort(404);
+            
+        }
+        $this->authorize('downloadcv', $application);
+
+        $path = $application->cv_path;
+
+        if (!$path || !Storage::disk('private')->exists($path)) {
+        abort(404);
+    }
+
+        return Storage::disk('private')->download($path, basename($path));
     }
 }
