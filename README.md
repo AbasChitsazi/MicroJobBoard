@@ -1,61 +1,204 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Job Board - Laravel Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern job board application built with Laravel that allows employers to post job opportunities and job seekers to apply for positions. The application features a clean, responsive interface with advanced filtering capabilities.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### For Job Seekers
+- **Browse Jobs**: View all available job postings with detailed information
+- **Advanced Search & Filtering**: Filter jobs by salary range, experience level, category, and search terms
+- **Job Applications**: Apply to jobs with expected salary and CV upload
+- **Application Management**: Track all your job applications in one place
+- **User Authentication**: Secure login/logout functionality
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### For Employers
+- **Employer Registration**: Register as an employer to post jobs
+- **Job Management**: Create, edit, and manage job postings
+- **Application Review**: View and download CV files from job applicants
+- **Dashboard**: Manage all posted jobs from a centralized dashboard
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Technical Features
+- **Responsive Design**: Modern UI built with Tailwind CSS
+- **Real-time Filtering**: Dynamic job filtering without page reload
+- **File Upload**: CV upload functionality for job applications
+- **Soft Deletes**: Jobs can be soft deleted for data integrity
+- **Authorization**: Role-based access control for employers
 
-## Learning Laravel
+## 🛠️ Technologies Used
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend
+- **Laravel 12.0** - PHP web application framework
+- **PHP 8.2+** - Server-side programming language
+- **MySQL/SQLite** - Database management system
+- **Eloquent ORM** - Database abstraction layer
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Frontend
+- **Tailwind CSS 4.1** - Utility-first CSS framework
+- **Alpine.js 3.14** - Lightweight JavaScript framework
+- **Vite 7.0** - Build tool and development server
+- **Blade Templates** - Laravel's templating engine
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Development Tools
+- **Laravel Debugbar** - Debugging and profiling
+- **Laravel Pint** - PHP code style fixer
+- **PHPUnit** - Testing framework
+- **Faker** - Data generation for testing
 
-## Laravel Sponsors
+## 📋 Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP 8.2 or higher
+- Composer
+- Node.js and npm
+- Database (MySQL, PostgreSQL, or SQLite)
 
-### Premium Partners
+## 🚀 Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd jobBoard
+   ```
 
-## Contributing
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
 
-## Code of Conduct
+4. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Configure database**
+   - Update your database credentials in `.env` file
+   - Or use SQLite for development:
+     ```bash
+     touch database/database.sqlite
+     ```
 
-## Security Vulnerabilities
+6. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. **Seed database (optional)**
+   ```bash
+   php artisan db:seed
+   ```
 
-## License
+8. **Build assets**
+   ```bash
+   npm run build
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+9. **Start development server**
+   ```bash
+   php artisan serve
+   ```
+
+## 🏗️ Project Structure
+
+```
+jobBoard/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/     # Application controllers
+│   │   ├── Middleware/      # Custom middleware
+│   │   └── Requests/        # Form request validation
+│   ├── Models/              # Eloquent models
+│   ├── Policies/            # Authorization policies
+│   └── View/                # Blade components
+├── database/
+│   ├── factories/           # Model factories
+│   ├── migrations/          # Database migrations
+│   └── seeders/            # Database seeders
+├── resources/
+│   ├── css/                # Stylesheets
+│   ├── js/                 # JavaScript files
+│   └── views/              # Blade templates
+└── routes/
+    └── web.php             # Web routes
+```
+
+## 🗄️ Database Schema
+
+### Core Models
+- **Users**: Authentication and user management
+- **Employers**: Company information and job posting capabilities
+- **Jobs**: Job postings with filtering capabilities
+- **JobApplications**: Job applications with CV uploads
+
+### Key Relationships
+- User has one Employer (optional)
+- User has many JobApplications
+- Employer has many Jobs
+- Job has many JobApplications
+- Job belongs to Employer
+
+## 🎨 UI Components
+
+The application uses a component-based architecture with reusable Blade components:
+- **Layout**: Main application layout with navigation
+- **Job Cards**: Display job information in cards
+- **Forms**: Reusable form components with validation
+- **Buttons**: Consistent button styling
+- **Breadcrumbs**: Navigation breadcrumbs
+
+## 🔧 Development
+
+### Running Tests
+```bash
+php artisan test
+```
+
+### Code Style
+```bash
+./vendor/bin/pint
+```
+
+### Development Mode
+```bash
+npm run dev
+php artisan serve
+```
+
+## 📱 Features in Detail
+
+### Job Filtering
+- Search by job title, description, or company name
+- Filter by salary range (min/max)
+- Filter by experience level (entry, intermediate, senior)
+- Filter by job category (IT, Finance, Marketing, etc.)
+
+### File Management
+- CV upload during job application
+- Secure file storage
+- CV download for employers
+
+### User Experience
+- Responsive design for all devices
+- Real-time form validation
+- Success/error message handling
+- Intuitive navigation
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 🆘 Support
+
+For support and questions, please open an issue in the repository or contact the development team.
