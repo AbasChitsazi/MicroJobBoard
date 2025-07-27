@@ -11,7 +11,7 @@ class JobRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class JobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|min:5|max:255|string',
+            'location' => 'required|string|max:255',
+            'salary' => 'required|numeric|min:5000|max:1000000',
+            'description' => 'required|string',
+            'experience' => 'required|in:' . implode(',', \App\Models\Job::$experience).'',
+            'category' => 'required|in:' . implode(',', \App\Models\Job::$jobcategory).'',
         ];
     }
 }
