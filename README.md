@@ -19,7 +19,6 @@ A modern job board application built with Laravel that allows employers to post 
 
 ### Technical Features
 - **Responsive Design**: Modern UI built with Tailwind CSS
-- **Real-time Filtering**: Dynamic job filtering without page reload
 - **File Upload**: CV upload functionality for job applications
 - **Soft Deletes**: Jobs can be soft deleted for data integrity
 - **Authorization**: Role-based access control for employers
@@ -47,7 +46,7 @@ A modern job board application built with Laravel that allows employers to post 
 ### Backend
 - **Laravel 12.0** - PHP web application framework
 - **PHP 8.2+** - Server-side programming language
-- **MySQL/SQLite** - Database management system
+- **MySQL** - Database management system
 - **Eloquent ORM** - Database abstraction layer
 
 ### Frontend
@@ -59,7 +58,6 @@ A modern job board application built with Laravel that allows employers to post 
 ### Development Tools
 - **Laravel Debugbar** - Debugging and profiling
 - **Laravel Pint** - PHP code style fixer
-- **PHPUnit** - Testing framework
 - **Faker** - Data generation for testing
 
 ## 📋 Prerequisites
@@ -67,7 +65,7 @@ A modern job board application built with Laravel that allows employers to post 
 - PHP 8.2 or higher
 - Composer
 - Node.js and npm
-- Database (MySQL, PostgreSQL, or SQLite)
+- Database (MySQL)
 
 ## 🚀 Installation
 
@@ -87,35 +85,29 @@ A modern job board application built with Laravel that allows employers to post 
    npm install
    ```
 
-4. **Environment setup**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-
-5. **Configure database**
+4. **Configure database**
    - Update your database credentials in `.env` file
    - Or use SQLite for development:
      ```bash
      touch database/database.sqlite
      ```
 
-6. **Run migrations**
+5. **Run migrations**
    ```bash
    php artisan migrate
    ```
 
-7. **Seed database (optional)**
+5. **Seed database (optional)**
    ```bash
    php artisan db:seed
    ```
 
-8. **Build assets**
+7. **Build assets**
    ```bash
    npm run build
    ```
 
-9. **Start development server**
+8. **Start development server**
    ```bash
    php artisan serve
    ```
