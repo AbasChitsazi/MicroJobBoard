@@ -20,7 +20,9 @@ class Job extends Model
     public static array $experience = ['entry', 'intermediate', 'senior'];
     public static array $jobcategory = ['IT', 'Finance', 'Marketing', 'CTO', 'CEO', 'Sales', 'UI/UX', 'Developer'];
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title','location','salary','description','experience','category'
+    ];
 
 
 

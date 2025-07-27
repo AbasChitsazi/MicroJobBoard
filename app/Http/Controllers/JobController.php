@@ -12,7 +12,7 @@ class JobController extends Controller
 
         $filters = request()->only(['search', 'min_salary', 'max_salary', 'category', 'experience']);
 
-        return view('job.index', ['jobs' => Job::with('employer')->filter($filters)->paginate(20)->withQueryString()]);
+        return view('job.index', ['jobs' => Job::with('employer')->latest()->filter($filters)->paginate(20)->withQueryString()]);
     }
 
     /**

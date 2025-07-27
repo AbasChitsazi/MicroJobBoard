@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class MyJobController extends Controller
@@ -11,7 +12,21 @@ class MyJobController extends Controller
      */
     public function index()
     {
-        return view('my_job.index');
+        return view('my_job.index',
+        [
+            'jobs' => auth()
+            ->user()
+            ->employer
+            ->jobs()
+            ->with([
+                'employer',
+                'jobApplications',
+                'jobApplications.user'
+                ])
+            ->get()
+        ],
+
+    );
     }
 
     /**
@@ -27,23 +42,22 @@ class MyJobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_data =  $request->validate([
+            'title' => 'required|min:5|max:255|string',
+            'location' => 'required|string|max:255',
+            'salary' => 'required|numeric|min:5000|max:1000000',
+            'description' => 'required|string',
+            'experience' => 'required|in:' . implode(',', \App\Models\Job::$experience).'',
+            'category' => 'required|in:' . implode(',', \App\Models\Job::$jobcategory).'',
+        ]);
+        auth()->user()->employer->jobs()->create($validated_data);
+
+        return redirect()->route('my-jobs.index')->with('success','Job Created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Job $myJob)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return view('my_job.edit',['job' => $myJob]);
     }
 
     /**
