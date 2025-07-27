@@ -5,14 +5,16 @@
             {!! nl2br(e($job->description)) !!}
         </p>
         @guest
-            <div class="text-center text-sm font-medium text-red-400 border-2 border-red-400 bg-red-100 rounded-md p-3">
+            <div class="text-center text-sm font-medium text-red-400 border-2 border-red-400 bg-red-100 rounded-md p-2">
                 Sign in for Apply
             </div>
         @else
             @can('apply', $job)
-                <x-link-button class="py-2.5 px-2.5 text-green-600" :href="route('job.application.create', $job)">
+            <div >
+                <x-link-button class="px-3 py-2.5 text-green-600" :href="route('job.application.create', $job)">
                     Apply
                 </x-link-button>
+            </div>
             @else
                 <div
                     class="text-center text-sm font-medium text-green-600 border-2 border-green-700 bg-green-100 rounded-md p-3">

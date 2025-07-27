@@ -28,8 +28,8 @@
             'pr-8' => $formRef,
             'ring-slate-300' => !$errors->has($name),
             'ring-red-300' => $errors->has($name),
-        ]) value="{{ old($name, $value) }}" name="{{ $name }}"
-            id="{{ $name }}"></textarea>
+        ])  name="{{ $name }}"
+            id="{{ $name }}">{{ old($name, $value) }}</textarea>
     @endif
     @error($name)
         <div class="mt-1 text-sm text-red-500">

@@ -34,3 +34,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('my-job-applications',MyjobApplicationController::class)
     ->only(['index','destroy']);
 });
+
+Route::fallback(function(){
+    return response()->view('404.index', [], 404);
+});

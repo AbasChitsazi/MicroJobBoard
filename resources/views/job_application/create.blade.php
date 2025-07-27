@@ -9,12 +9,11 @@
 
                 @csrf
                 <div class="mb-4">
-                    <label for="expected_salary" class="mb-2 block text-base font-normal text-slate-900">Expected
-                        Salary</label>
+                    <x-label for="expected_salary" :required="true">Expected Salary</x-label>
                     <x-text-input type="number" name="expected_salary" />
                 </div>
                 <div class="mb-4">
-                    <label for="cv" class="mb-2  block text-base font-normal text-slate-900">Upload CV</label>
+                    <x-label for="cv" :required="true">Upload CV</x-label>
                     <x-text-input class="" type="file" name="cv" />
                 </div>
                 <x-button class="w-full cursor-pointer text-green-600">

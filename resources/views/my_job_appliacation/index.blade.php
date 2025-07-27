@@ -31,7 +31,7 @@
                     <form action="{{ route('my-job-applications.destroy', $application) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <x-button class="cursor-pointer">Cancle</x-button>
+                        <x-button onclick="return confirm('Are you sure you want to cancle applicants {{$application->job->title}}?');"  class="cursor-pointer">Cancle</x-button>
                     </form>
                 </div>
             </div>
