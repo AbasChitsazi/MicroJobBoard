@@ -28,6 +28,7 @@ class MyJobController extends Controller
                         'jobApplications',
                         'jobApplications.user'
                     ])
+                    ->withTrashed()
                     ->get()
             ],
 

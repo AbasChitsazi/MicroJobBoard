@@ -27,6 +27,7 @@
                             class="text-blue-500 font-semibold">${{ number_format($application->job->job_applications_avg_expected_salary) }}</span>
                     </div>
                 </div>
+                @if (!$application->job->deleted_at)
                 <div class="text-right text-red-500 ">
                     <form action="{{ route('my-job-applications.destroy', $application) }}" method="POST">
                         @csrf
@@ -35,6 +36,7 @@
                     </form>
                 </div>
             </div>
+            @endif
 
         </x-job-card>
     @empty
