@@ -24,6 +24,24 @@ A modern job board application built with Laravel that allows employers to post 
 - **Soft Deletes**: Jobs can be soft deleted for data integrity
 - **Authorization**: Role-based access control for employers
 
+
+## 📸 Screenshots
+
+### Home Page
+![Home Page](docs/homepage.png)
+
+### My Jobs page
+![My Jobs page](docs/my-jobs.png)
+
+### Job Application Page
+![Job Application Page](docs/job-application.png)
+
+### Job Apply Page
+![Job Apply Page](docs/job-apply.png)
+
+
+
+
 ## 🛠️ Technologies Used
 
 ### Backend
@@ -152,16 +170,6 @@ The application uses a component-based architecture with reusable Blade componen
 
 ## 🔧 Development
 
-### Running Tests
-```bash
-php artisan test
-```
-
-### Code Style
-```bash
-./vendor/bin/pint
-```
-
 ### Development Mode
 ```bash
 npm run dev
@@ -201,4 +209,4 @@ This project is open-sourced software licensed under the [MIT license](https://o
 
 ## 🆘 Support
 
-For support and questions, please open an issue in the repository or contact the development team.
+For support and questions, please open an issue in the repository or contact the development team [abaschitsazii@gmail.com](mailto:abaschotsazii@gmail.com).
