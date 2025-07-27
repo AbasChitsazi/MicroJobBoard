@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Job::class)->constrained();
 
             $table->unsignedInteger('expected_salary');
-            
+
             $table->timestamps();
         });
     }
