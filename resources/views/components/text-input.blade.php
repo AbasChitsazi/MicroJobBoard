@@ -24,7 +24,7 @@
             ]) />
     @else
         <textarea @class([
-            'w-full rounded-md border-0 py-1.5 px-3 text-sm ring-2 placeholder:text-slate-400 focus:ring-3',
+            'w-full  rounded-md border-0  py-1.5 px-3 text-sm ring-2 placeholder:text-slate-400 focus:ring-3',
             'pr-8' => $formRef,
             'ring-slate-300' => !$errors->has($name),
             'ring-red-300' => $errors->has($name),
@@ -37,3 +37,4 @@
         </div>
     @enderror
 </div>
+

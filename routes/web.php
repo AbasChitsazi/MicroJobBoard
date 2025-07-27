@@ -5,6 +5,8 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MyjobApplicationController;
+use App\Http\Controllers\MyJobController;
+use App\Http\Middleware\Employer;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +39,8 @@ Route::middleware('auth')->group(function(){
 
     Route::resource('employer',EmployerController::class)
     ->only(['store','create']);
+
+    Route::middleware(Employer::class)->resource('my-jobs',MyJobController::class);
 
 });
 
