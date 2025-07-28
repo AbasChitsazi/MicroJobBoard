@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\MyjobApplicationController;
@@ -24,6 +25,15 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login.store'
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('auth.register');
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register.store');
 
+    // forgot password
+
+Route::prefix('forgot')->group(function(){
+    Route::get('password',[ForgotPasswordController::class,'showLinkRequest'])->name('password.request');
+    Route::post('password',[ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
+
+    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
+});
 
 
 Route::delete('logout', fn() => to_route('auth.destroy'))

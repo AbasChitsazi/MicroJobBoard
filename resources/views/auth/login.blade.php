@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="#" class="text-indigo-600 hover:underline">Forgot password?</a>
+                    <a href="{{route('password.request')}}" class="text-indigo-600 hover:underline">Forgot password?</a>
                 </div>
             </div>
             <x-button class="w-full bg-green-50 text-lg py-3 cursor-pointer hover:bg-slate-100">Login</x-button>

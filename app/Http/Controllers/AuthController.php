@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -48,20 +50,25 @@ class AuthController extends Controller
             'email' => $validated_data['email'],
             'password' => Hash::make($validated_data['password'])
         ]);
-        if($created_user){
-            Auth::login($created_user );
+        if ($created_user) {
+            Auth::login($created_user);
             return redirect()->route('jobs.index');
         }
         return back()->with('error', 'sign up failed please try again');
-
     }
     public function destroy()
     {
         Auth::logout();
-
+        $this->deleteExpiredResetTokens();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
         return redirect('/');
+    }
+    public function deleteExpiredResetTokens()
+    {
+        DB::table('password_resets')
+            ->where('created_at', '<', Carbon::now()->subMinutes(5))
+            ->delete();
     }
 }
