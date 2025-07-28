@@ -16,12 +16,15 @@ Route::get('', fn() => to_route('jobs.index'));
 Route::resource('jobs', JobController::class)
     ->only(['index', 'show']);
 
+    // login page
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login.store');
 
-Route::get('login', fn() => to_route('auth.create'))
-    ->name('login');
+    // register page
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('auth.register');
+Route::post('/register', [AuthController::class, 'register'])->name('auth.register.store');
 
-Route::resource('auth', AuthController::class)
-    ->only(['create', 'store']);
+
 
 Route::delete('logout', fn() => to_route('auth.destroy'))
     ->name('logout');

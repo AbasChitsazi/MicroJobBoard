@@ -1,7 +1,7 @@
 <x-layout>
     <h1 class="my-16 text-center text-5xl font-medium text-slate-600">Sign in to Your account</h1>
     <x-card class="py-12 px-20">
-        <form action="{{ route('auth.store') }}" method="POST">
+        <form action="{{ route('auth.login.store') }}" method="POST">
             @csrf
             <div class="mb-8">
                 <x-label for="email" :required="true">E-mail</x-label>
@@ -9,7 +9,7 @@
             </div>
 
             <div class="mb-8">
-                <label for="password" :required="true">Password</label>
+                <x-label for="password" :required="true">Password</x-label>
                 <x-text-input name="password" type="password" class="text-lg py-3 px-4"/>
             </div>
 
@@ -25,6 +25,10 @@
                 </div>
             </div>
             <x-button class="w-full bg-green-50 text-lg py-3 cursor-pointer hover:bg-slate-100">Login</x-button>
+
         </form>
+        <div class="mt-5 text-center">
+        Don't have an account? <a class="hover:underline text-indigo-500 " href="{{route('auth.register')}}">Sign up</a>
+        </div>
     </x-card>
 </x-layout>
