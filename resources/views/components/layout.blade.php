@@ -14,7 +14,7 @@
         <ul class="flex space-x">
             <li>
                 <a href="{{ route('jobs.index') }}"
-                    class="flex hover:text-cyan-600 duration-300 cursor-pointer items-center {{request()->routeIs('jobs.index') ? 'text-cyan-600 ':''}}"><svg
+                    class="flex hover:text-cyan-600 duration-300 cursor-pointer items-center {{request()->routeIs(['jobs.index','jobs.show']) ? 'text-cyan-600 ':''}}"><svg
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
