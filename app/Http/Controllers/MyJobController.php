@@ -40,7 +40,7 @@ class MyJobController extends Controller
             $jobsQuery->onlyTrashed();
         }
 
-        $jobs = $jobsQuery->get();
+        $jobs = $jobsQuery->latest()->get();
 
         return view('my_job.index', [
             'jobs' => $jobs,

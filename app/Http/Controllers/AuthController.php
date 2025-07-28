@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -96,5 +97,27 @@ class AuthController extends Controller
         }
 
         return back()->with('error', 'Failed to update profile');
+    }
+    public function editCompany()
+    {
+        return view('auth.profile.editcompany');
+    }
+    public function updateCompany(Request $request)
+    {
+        $validData = $request->validate([
+            'company_name' => [
+                'required',
+                'string',
+                'min:3',
+                Rule::unique('employers', 'company_name')
+                    ->ignore(auth()->user()->id, 'user_id')
+            ],
+        ]);
+
+        DB::table('employers')
+            ->where('user_id', auth()->user()->id)
+            ->update(['company_name' => $validData['company_name']]);
+
+        return redirect()->route('auth.profile')->with('success', 'Company name updated successfully');
     }
 }

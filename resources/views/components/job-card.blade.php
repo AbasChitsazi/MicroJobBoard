@@ -1,9 +1,14 @@
-<x-card class="mb-4 hover:shadow-lg transition-shadow duration-300">
+<x-card class="mb-4  hover:shadow-lg transition-shadow duration-300 ">
     <div class=" mb-4 flex justify-between">
         <div>
-            <a href="{{route('jobs.show',$job)}}">
+            <a href="{{$job->deleted_at ? '' : route('jobs.show',$job)}}">
                 @if ($job->deleted_at)
-                <h2 class="text-lg line-through font-medium hover:text-slate-800 transition 300">{{ $job->title }}</h2>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <h2 class="text-lg font-medium line-through text-red-500 ">{{ $job->title }} </h2>
+                        <span class="text-sm ml-5 text-red-500">Deleted</span>
+                    </div>
+                </div>
                 @else
                 <h2 class="text-lg  font-medium hover:text-slate-800 transition 300">{{ $job->title }}</h2>
                 @endif
@@ -30,9 +35,7 @@
                 </svg>
                 {{ $job->location }}</div>
 
-                @if ($job->deleted_at)
-                <span class="text-xs text-red-500 mt-0.5">Deleted</span>
-                @endif
+
         </div>
         <div class="flex space-x-1 text-xs ">
             <x-tag><a

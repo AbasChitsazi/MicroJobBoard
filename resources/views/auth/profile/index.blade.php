@@ -58,11 +58,18 @@
 
             </div>
         </div>
-        <div class="pt-6">
-            <a href="{{ route('auth.profile.edit') }}"
-                class="inline-block bg-emerald-600 text-white text-sm px-4 py-2 rounded hover:bg-emerald-700 transition">
-                Edit Profile
-            </a>
+        <div class="pt-6 flex items-center justify-between">
+            <div class="flex">
+                <div class="mr-3"><a href="{{ route('auth.profile.edit') }}"
+                    class="inline-block bg-emerald-600 text-white text-sm px-4 py-2 rounded hover:bg-emerald-700 transition">
+                    Edit Profile
+                </a></div>
+                <div><a href="{{ route('auth.company.edit') }}"
+                    class="inline-block bg-indigo-600 text-white text-sm px-4 py-2 rounded hover:bg-indigo-700 transition">
+                    Edit Company name
+                </a></div>
+            </div>
+
         </div>
     </x-card>
 </x-layout>

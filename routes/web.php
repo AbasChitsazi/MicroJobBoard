@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function(){
     Route::get('profile',[AuthController::class,'showProfile'])->name('auth.profile');
     Route::get('profile/edit',[AuthController::class,'showEditProfile'])->name('auth.profile.edit');
     Route::post('edit',[AuthController::class,'updateProfile'])->name('auth.profile.update');
+    Route::get('profile/edit-company',[AuthController::class,'editCompany'])->name('auth.company.edit');
+    Route::post('profile/edit-company',[AuthController::class,'updateCompany'])->name('auth.company.update');
 
 });
 
