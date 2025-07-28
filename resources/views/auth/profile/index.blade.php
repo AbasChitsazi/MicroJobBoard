@@ -1,4 +1,5 @@
 <x-layout>
+    <x-breadcrumbs class="mb-4" :links="['Profile'=>'#']"/>
     <x-card class="space-y-4">
         <h2 class="text-xl font-semibold text-gray-800">Your Profile</h2>
 
@@ -23,19 +24,23 @@
         <div class="mt-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Your Job Statistics</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
+                <a href="{{route('my-job-applications.index')}}">
+                    <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
                     <p class="text-gray-500 text-sm">Jobs Applied</p>
                     <p class="text-2xl font-bold text-emerald-600">
                         {{ auth()->user()->jobApplications()->count() }}
                     </p>
                 </div>
+                </a>
 
-                <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
+                <a href="{{route('my-jobs.index')}}">
+                    <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
                     <p class="text-gray-500 text-sm">Jobs Created</p>
                     <p class="text-2xl font-bold text-indigo-600">
-                        {{ auth()->user()->employer?->jobs()->count() }}
+                        {{ auth()->user()->employer?->jobs()->count() ?? 0 }}
                     </p>
                 </div>
+                </a>
             </div>
         </div>
         <div class="pt-6">
