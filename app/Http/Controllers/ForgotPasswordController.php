@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 
 class ForgotPasswordController extends Controller
 {
@@ -26,6 +27,15 @@ class ForgotPasswordController extends Controller
 
         $email = $valid_email['email'];
 
+        $key = 'password-reset-request:' . $email;
+
+        if (RateLimiter::tooManyAttempts($key, 3)) {
+            $seconds = RateLimiter::availableIn($key);
+            return back()->with('error',"Prevent From Sending Request too much. try again after $seconds seconds.");
+        }
+
+        RateLimiter::hit($key, 900);
+        
         $token = Str::random(64);
 
         DB::table('password_resets')->updateOrInsert(
@@ -44,7 +54,7 @@ class ForgotPasswordController extends Controller
 
         return back()->with('success', 'A password reset link has been sent to your email.');
     }
-    public function showResetForm(Request $request,$token)
+    public function showResetForm(Request $request, $token)
     {
         $email = $request->query('email');
 
@@ -55,50 +65,52 @@ class ForgotPasswordController extends Controller
 
         if (!$reset) {
             return redirect()->route('password.request')
-                ->with('error','Link is invalid');
+                ->with('error', 'Link is invalid');
         }
 
         if (Carbon::parse($reset->created_at)->addMinutes(5)->isPast()) {
             return redirect()->route('password.request')
-                ->with('error','Link is Expired. Please try again to reset your password');
+                ->with('error', 'Link is Expired. Please try again to reset your password');
         }
 
-        return view('auth.forgot-password.resetform',[  'token' => $token,
-        'email' => $email,]);
+        return view('auth.forgot-password.resetform', [
+            'token' => $token,
+            'email' => $email,
+        ]);
     }
     public function reset(Request $request)
     {
         $request->validate([
-        'email' => 'required|email|exists:users,email',
-        'token' => 'required|string',
-        'password' => 'required|string|min:6|confirmed',
-    ]);
+            'email' => 'required|email|exists:users,email',
+            'token' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
 
-    $resetRequest = DB::table('password_resets')
-        ->where('email', $request->email)
-        ->where('token', $request->token)
-        ->first();
+        $resetRequest = DB::table('password_resets')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->first();
 
-    if (!$resetRequest) {
-        return back()->with('error','Link is invalid');
-    }
-
-
-    if (Carbon::parse($resetRequest->created_at)->addMinutes(5)->isPast()) {
-        return back()->with('error','Link is Expired. Please try again to reset your password');
-    }
-
-    $user = User::where('email', $request->email)->first();
-    $user->password = Hash::make($request->password);
-    $user->save();
+        if (!$resetRequest) {
+            return back()->with('error', 'Link is invalid');
+        }
 
 
-    DB::table('password_resets')
-        ->where('email', $request->email)
-        ->delete();
+        if (Carbon::parse($resetRequest->created_at)->addMinutes(5)->isPast()) {
+            return back()->with('error', 'Link is Expired. Please try again to reset your password');
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
 
 
-    return redirect()->route('auth.login')->with('success', 'Your password succeefully changed. Please Sign in');
+        DB::table('password_resets')
+            ->where('email', $request->email)
+            ->delete();
+
+
+        return redirect()->route('auth.login')->with('success', 'Your password succeefully changed. Please Sign in');
     }
 }
