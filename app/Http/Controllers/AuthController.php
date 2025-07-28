@@ -75,4 +75,26 @@ class AuthController extends Controller
     {
         return view('auth.profile.index');
     }
+    public function showEditProfile()
+    {
+        return view('auth.profile.edit');
+    }
+    public function updateProfile(Request $request)
+    {
+        $validData = $request->validate([
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+        ]);
+
+        $updated = auth()->user()->update([
+            'name' => $validData['name'],
+            'email' => $validData['email'],
+        ]);
+
+        if ($updated) {
+            return redirect()->route('auth.profile')->with('success', 'Your profile updated successfully');
+        }
+
+        return back()->with('error', 'Failed to update profile');
+    }
 }

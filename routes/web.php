@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function(){
     Route::get('download-cv/{application}',[MyJobController::class,'downloadcv'])->name('download-cv');
 
     Route::get('profile',[AuthController::class,'showProfile'])->name('auth.profile');
+    Route::get('profile/edit',[AuthController::class,'showEditProfile'])->name('auth.profile.edit');
+    Route::post('edit',[AuthController::class,'updateProfile'])->name('auth.profile.update');
 
 });
 

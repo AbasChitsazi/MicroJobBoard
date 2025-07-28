@@ -1,5 +1,5 @@
 <x-layout>
-    <x-breadcrumbs class="mb-4" :links="['Profile'=>'#']"/>
+    <x-breadcrumbs class="mb-4" :links="['Profile' => '#']" />
     <x-card class="space-y-4">
         <h2 class="text-xl font-semibold text-gray-800">Your Profile</h2>
 
@@ -17,34 +17,49 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 text-sm text-gray-600">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 text-gray-600">
             <div><span class="font-medium">Member since:</span> {{ auth()->user()->created_at->format('F Y') }}</div>
 
+        </div>
+        <div class="text-gray-600">
+            <div>
+                <span class="font-medium">Last Update:
+                </span>{{ auth()->user()->updated_at->diffForHumans() }}
+            </div>
         </div>
         <div class="mt-6">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Your Job Statistics</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a href="{{route('my-job-applications.index')}}">
+                <a href="{{ route('my-job-applications.index') }}">
                     <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
-                    <p class="text-gray-500 text-sm">Jobs Applied</p>
-                    <p class="text-2xl font-bold text-emerald-600">
-                        {{ auth()->user()->jobApplications()->count() }}
-                    </p>
-                </div>
+                        <p class="text-gray-500 text-sm">Jobs Applied</p>
+                        <p class="text-2xl font-bold text-emerald-600">
+                            {{ auth()->user()->jobApplications()->count() }}
+                        </p>
+                    </div>
                 </a>
+                @if (!is_null(auth()->user()->employer))
+                    <a href="{{ route('my-jobs.index') }}">
+                        <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
+                            <div class="flex items-center justify-between text-xs">
+                                <p class="text-gray-500 ">Jobs Created</p>
+                                <div>
+                                    {{ auth()->user()->employer->company_name }}
+                                </div>
 
-                <a href="{{route('my-jobs.index')}}">
-                    <div class="rounded-lg border border-gray-200 p-4 shadow-sm bg-white">
-                    <p class="text-gray-500 text-sm">Jobs Created</p>
-                    <p class="text-2xl font-bold text-indigo-600">
-                        {{ auth()->user()->employer?->jobs()->count() ?? 0 }}
-                    </p>
-                </div>
-                </a>
+                            </div>
+                            <p class="text-2xl font-bold text-indigo-600">
+                                {{ auth()->user()->employer?->jobs()->count() ?? 0 }}
+                            </p>
+                        </div>
+                    </a>
+                @else
+                @endif
+
             </div>
         </div>
         <div class="pt-6">
-            <a href="{{}}"
+            <a href="{{ route('auth.profile.edit') }}"
                 class="inline-block bg-emerald-600 text-white text-sm px-4 py-2 rounded hover:bg-emerald-700 transition">
                 Edit Profile
             </a>
