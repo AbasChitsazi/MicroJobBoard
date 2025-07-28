@@ -71,4 +71,8 @@ class AuthController extends Controller
             ->where('created_at', '<', Carbon::now()->subMinutes(5))
             ->delete();
     }
+    public function showProfile()
+    {
+        return view('auth.profile.index');
+    }
 }

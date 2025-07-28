@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function(){
 
     Route::get('download-cv/{application}',[MyJobController::class,'downloadcv'])->name('download-cv');
 
+    Route::get('profile',[AuthController::class,'showProfile'])->name('auth.profile');
+
 });
 
 Route::fallback(function(){
