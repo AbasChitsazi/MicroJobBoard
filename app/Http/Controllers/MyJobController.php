@@ -18,24 +18,33 @@ class MyJobController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAnyEmployer', Job::class);
-        return view(
-            'my_job.index',
-            [
-                'jobs' => auth()
-                    ->user()
-                    ->employer
-                    ->jobs()
-                    ->with([
-                        'employer',
-                        'jobApplications',
-                        'jobApplications.user'
-                    ])
-                    ->withTrashed()
-                    ->get()
-            ],
 
-        );
+        $this->authorize('viewAnyEmployer', Job::class);
+
+        $status = request('status');
+
+        $jobsQuery = auth()
+            ->user()
+            ->employer
+            ->jobs()
+            ->with([
+                'employer',
+                'jobApplications',
+                'jobApplications.user',
+            ])
+            ->withTrashed();
+
+        if ($status === 'active') {
+            $jobsQuery->whereNull('deleted_at');
+        } elseif ($status === 'deleted') {
+            $jobsQuery->onlyTrashed();
+        }
+
+        $jobs = $jobsQuery->get();
+
+        return view('my_job.index', [
+            'jobs' => $jobs,
+        ]);
     }
 
     public function create()
@@ -78,17 +87,16 @@ class MyJobController extends Controller
     public function downloadcv(JobApplication $application)
     {
 
-        if(is_null($application->job)){
-        abort(404);
-            
+        if (is_null($application->job)) {
+            abort(404);
         }
         $this->authorize('downloadcv', $application);
 
         $path = $application->cv_path;
 
         if (!$path || !Storage::disk('private')->exists($path)) {
-        abort(404);
-    }
+            abort(404);
+        }
 
         return Storage::disk('private')->download($path, basename($path));
     }
