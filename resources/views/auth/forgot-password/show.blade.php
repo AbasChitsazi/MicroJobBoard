@@ -10,7 +10,7 @@
                 <x-text-input name="email" class="text-lg py-3 px-4" />
             </div>
 
-            <x-button class="w-full bg-green-50 text-lg py-3 cursor-pointer hover:bg-slate-100">Send Link</x-button>
+            <x-button class="w-full bg-green-50 text-lg py-3 cursor-pointer hover:bg-slate-100">Send Reset Link</x-button>
 
         </form>
     </x-card>

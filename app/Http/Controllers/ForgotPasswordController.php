@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use App\Mail\PasswordResetMail;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -31,11 +34,11 @@ class ForgotPasswordController extends Controller
 
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $seconds = RateLimiter::availableIn($key);
-            return back()->with('error',"Prevent From Sending Request too much. try again after $seconds seconds.");
+            return back()->with('error', "Prevent From Sending Request too much. try again after $seconds seconds.");
         }
 
         RateLimiter::hit($key, 900);
-        
+
         $token = Str::random(64);
 
         DB::table('password_resets')->updateOrInsert(
@@ -47,12 +50,15 @@ class ForgotPasswordController extends Controller
             ]
         );
 
-        Mail::send('email.password-reset', ['token' => $token, 'email' => $email], function ($message) use ($email) {
-            $message->to($email);
-            $message->subject('Reset Your Password');
-        });
+        try {
+            Mail::to($email)->queue(new PasswordResetMail($token, $email));
+        } catch (Exception $e) {
+            throw new Exception('Plaese activate Queue with command: php artisan queue:work');
+        }
 
         return back()->with('success', 'A password reset link has been sent to your email.');
+
+
     }
     public function showResetForm(Request $request, $token)
     {

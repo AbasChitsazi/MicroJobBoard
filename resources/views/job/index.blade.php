@@ -39,4 +39,5 @@
             </div>
         </x-job-card>
     @endforeach
+    {{$jobs->links()}}
 </x-layout>

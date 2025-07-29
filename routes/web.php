@@ -1,15 +1,16 @@
 <?php
 
+use App\Models\JobApplication;
+use App\Http\Middleware\Employer;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MyJobController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\JobApplicationController;
-use App\Http\Controllers\JobController;
 use App\Http\Controllers\MyjobApplicationController;
-use App\Http\Controllers\MyJobController;
-use App\Http\Middleware\Employer;
-use App\Models\JobApplication;
-use Illuminate\Support\Facades\Route;
 
 Route::get('', fn() => to_route('jobs.index'));
 
@@ -17,8 +18,12 @@ Route::get('', fn() => to_route('jobs.index'));
 Route::resource('jobs', JobController::class)
     ->only(['index', 'show']);
 
+
+
+
+
     // login page
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login.store');
 
     // register page
@@ -62,6 +67,8 @@ Route::middleware('auth')->group(function(){
     Route::post('edit',[AuthController::class,'updateProfile'])->name('auth.profile.update');
     Route::get('profile/edit-company',[AuthController::class,'editCompany'])->name('auth.company.edit');
     Route::post('profile/edit-company',[AuthController::class,'updateCompany'])->name('auth.company.update');
+
+    Route::delete('/sessions/{id}', [SessionController::class, 'destroy'])->name('sessions.destroy');
 
 });
 
