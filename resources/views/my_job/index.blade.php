@@ -63,7 +63,7 @@
                         <form action="{{ route('my-jobs.destroy', $job) }}" method="POST" class="w-full">
                             @csrf
                             @method('DELETE')
-                            <button type="submit"
+                            <button type="submit" onclick='return confirm("Are you sure to delete {{$job->title}}")'
                                 class="w-full inline-flex cursor-pointer items-center justify-center gap-2 rounded-md bg-red-100 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-200 transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5">

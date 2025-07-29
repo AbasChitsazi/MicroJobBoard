@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Session\Middleware\AuthenticateSession;
 
 class AuthController extends Controller
 {
@@ -82,21 +83,31 @@ class AuthController extends Controller
     }
     public function updateProfile(Request $request)
     {
+        $user = auth()->user();
+
         $validData = $request->validate([
             'name' => 'required|string|min:3',
             'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+            'current_password' => 'nullable|required_with:new_password|string',
+            'new_password' => 'nullable|min:8|confirmed',
+
         ]);
 
-        $updated = auth()->user()->update([
-            'name' => $validData['name'],
-            'email' => $validData['email'],
-        ]);
+        if ($request->filled('new_password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->route('auth.profile.edit')->with('error','current password is invalid');
+            }
 
-        if ($updated) {
-            return redirect()->route('auth.profile')->with('success', 'Your profile updated successfully');
+            $user->password = Hash::make($request->new_password);
         }
 
-        return back()->with('error', 'Failed to update profile');
+
+        $user->name = $validData['name'];
+        $user->email = $validData['email'];
+
+        $user->save();
+
+        return redirect()->route('auth.profile')->with('success', 'Your profile updated successfully');
     }
     public function editCompany()
     {
