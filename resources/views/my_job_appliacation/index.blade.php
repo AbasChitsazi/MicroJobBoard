@@ -32,7 +32,7 @@
                     <div>
                         <span class="font-medium text-gray-700">Your Asking Salary:</span>
                         <span
-                            class="text-green-500 font-semibold">${{ number_format($application->expected_salary) }}</span>
+                            class="text-emerald-500 font-semibold">${{ number_format($application->expected_salary) }}</span>
                     </div>
 
                     <div>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 @if (!$application->job->deleted_at)
-                    <div class="text-right text-red-500 ">
+                    <div class="text-right text-red-400 ">
                         <form action="{{ route('my-job-applications.destroy', $application) }}" method="POST">
                             @csrf
                             @method('DELETE')

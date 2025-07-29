@@ -26,7 +26,7 @@
         </ul>
         <ul class="flex items-center space-x-2">
             @auth
-                <li class="hover:text-emerald-700 transition 300 {{request()->routeIs('auth.profile') ? 'text-emerald-700 underline':''}}">
+                <li class="hover:text-[#1b7bc0] transition 300 {{request()->routeIs('auth.profile') ? 'text-[#1b7bc0] underline':''}}">
                     <a href="{{ route('auth.profile') }}" class="flex items-center space-x-0">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -37,7 +37,7 @@
                     </a>
 
                 </li>
-                <li class="hover:text-amber-700 transition 300 {{request()->routeIs(['my-job-applications.index']) ? 'text-amber-700 underline':''}}">
+                <li class="hover:text-[#1b7bc0] transition 300 {{request()->routeIs(['my-job-applications.index']) ? 'text-[#1b7bc0] underline':''}}">
                     <a href="{{ route('my-job-applications.index') }}" class="flex items-center space-x-0">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
@@ -49,7 +49,7 @@
                     </a>
 
                 </li>
-                <li class="hover:text-purple-700 transition 300 flex items-center space-x-2 {{request()->routeIs(['my-jobs.index','my-jobs.create']) ? 'text-purple-700 underline':''}}">
+                <li class="hover:text-[#1b7bc0] transition 300 flex items-center space-x-2 {{request()->routeIs(['my-jobs.index','my-jobs.create']) ? 'text-[#1b7bc0] underline':''}}">
                     <a href="{{ route('my-jobs.index') }}" class="flex items-center space-x-0">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">

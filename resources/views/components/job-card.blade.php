@@ -5,8 +5,8 @@
                 @if ($job->deleted_at)
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <h2 class="text-lg font-medium line-through text-red-500 ">{{ $job->title }} </h2>
-                        <span class="text-sm ml-5 text-red-500">Deleted</span>
+                        <h2 class="text-lg font-medium line-through text-red-400 ">{{ $job->title }} </h2>
+                        <span class="text-sm ml-5 text-red-400">Deleted</span>
                     </div>
                 </div>
                 @else
