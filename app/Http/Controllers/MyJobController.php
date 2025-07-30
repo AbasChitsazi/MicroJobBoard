@@ -6,8 +6,10 @@ use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Models\JobApplication;
 use App\Http\Requests\JobRequest;
+use App\Mail\SendStatuJobMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -127,9 +129,18 @@ class MyJobController extends Controller
 
         $jobApplication->update(['is_approved' => $request->status]);
 
+        $this->sendStatusOfJobApplicationToUser($jobApplication);
+
         return response()->json([
             'status' => true,
             'message' => $jobApplication->is_approved
         ]);
+    }
+    public function sendStatusOfJobApplicationToUser(JobApplication $jobApplication)
+    {
+        $email = $jobApplication->user?->email;
+
+        Mail::to($email)->queue(new SendStatuJobMail($jobApplication->is_approved,$jobApplication->job->title,$jobApplication->user->name));
+
     }
 }
