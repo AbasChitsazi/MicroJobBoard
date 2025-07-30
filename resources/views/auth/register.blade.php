@@ -27,7 +27,7 @@
 
         </form>
         <div class="mt-5 text-center">
-        Already hava account? <a class="hover:underline text-indigo-500 " href="{{route('auth.login')}}">Sign in</a>
+        Already hava account? <a class="hover:underline text-indigo-500 " href="{{route('login')}}">Sign in</a>
         </div>
     </x-card>
 </x-layout>
