@@ -6,7 +6,10 @@ use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Models\JobApplication;
 use App\Http\Requests\JobRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -99,5 +102,34 @@ class MyJobController extends Controller
         }
 
         return Storage::disk('private')->download($path, basename($path));
+    }
+
+    public function myJobsStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:0,1',
+            'jobs'   => 'required|exists:job_applications,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => false,
+                'message' => $validator->errors()->first(),
+            ], 422);
+        }
+        $jobApplication = JobApplication::findOrFail($request->jobs);
+        if(!is_null($jobApplication->is_approved)){
+            return response()->json([
+                'status'  => false,
+                'message' => 'this job have status',
+            ]);
+        }
+        $this->authorize('update', $jobApplication);
+
+        $jobApplication->update(['is_approved' => $request->status]);
+
+        return response()->json([
+            'status' => true,
+            'message' => $jobApplication->is_approved
+        ]);
     }
 }

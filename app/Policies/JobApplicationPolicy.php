@@ -41,7 +41,7 @@ class JobApplicationPolicy
      */
     public function update(User $user, JobApplication $jobApplication): bool
     {
-        return false;
+         return $user->id === $jobApplication->job->employer->user_id;
     }
 
     /**

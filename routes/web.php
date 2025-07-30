@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware(Employer::class)->resource('my-jobs',MyJobController::class);
 
+    Route::post('my-jobs-status',[MyJobController::class,'myJobsStatus'])->name('myjobs-status');
+
     Route::get('download-cv/{application}',[MyJobController::class,'downloadcv'])->name('download-cv');
 
     Route::get('profile',[AuthController::class,'showProfile'])->name('auth.profile');

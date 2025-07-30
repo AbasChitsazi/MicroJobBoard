@@ -16,7 +16,8 @@ class JobApplication extends Model
         'expected_salary',
         'user_id',
         'job_id',
-        'cv_path'
+        'cv_path',
+        'is_approved'
     ];
 
     public function job():BelongsTo

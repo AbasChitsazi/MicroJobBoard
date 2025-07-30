@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Job Board</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body
@@ -108,5 +109,5 @@
 
     {{ $slot }}
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </html>

@@ -19,8 +19,9 @@
         <x-job-card :job="$application->job">
             <div class="flex justify-between items-center text-sm text-slate-600 bg-gray-50 rounded-md p-4 shadow-sm">
                 <div class="space-y-1">
-                    <div class="font-semibold text-gray-800">
-                        Applied {{ $application->created_at->diffForHumans() }}
+                    <div class="font-semibold text-gray-800 ">
+                        <div>Applied {{ $application->created_at->diffForHumans() }}</div>
+
                     </div>
 
                     <div>
@@ -40,30 +41,37 @@
                         <span
                             class="text-blue-500 font-semibold">${{ number_format($application->job->job_applications_avg_expected_salary) }}</span>
                     </div>
+                    @if (!$application->job->deleted_at)
+                        <div>
+                            <span class="font-medium text-gray-700">Status:</span>
+                            <span
+                                class="{{ $application->is_approved !== null ? ($application->is_approved == 1 ? 'text-emerald-400' : 'text-red-400') : 'text-blue-400' }} font-semibold">{{ $application->is_approved !== null ? ($application->is_approved == 1 ? 'Approved' : 'Declined') : 'Pending' }}</span>
+                        </div>
+                    @endif
+
                 </div>
-                @if (!$application->job->deleted_at)
-                    <div class="text-right text-red-400 ">
+                @if (!$application->job->deleted_at && $application->is_approved == null)
+                    <div class="text-right text-red-400">
                         <form action="{{ route('my-job-applications.destroy', $application) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <x-button
-                                onclick="return confirm('Are you sure you want to cancle applicants {{ $application->job->title }}?');"
-                                class="cursor-pointer">Cancle</x-button>
+                                onclick="return confirm('Are you sure you want to cancel application for {{ addslashes($application->job->title) }}?');"
+                                class="cursor-pointer">Cancel</x-button>
                         </form>
                     </div>
-            </div>
-    @endif
+                @endif
 
-    </x-job-card>
-@empty
-    <div class="rounded-md border border-dashed border-slate-400 p-8">
-        <div class="text-center font-medium">
-            No job applictions yet
+        </x-job-card>
+    @empty
+        <div class="rounded-md border border-dashed border-slate-400 p-8">
+            <div class="text-center font-medium">
+                No job applictions yet
+            </div>
+            <div class="text-center">
+                Go find some jobs <a class="text-indigo-500 hover:underline" href="{{ route('jobs.index') }}">here!</a>
+            </div>
         </div>
-        <div class="text-center">
-            Go find some jobs <a class="text-indigo-500 hover:underline" href="{{ route('jobs.index') }}">here!</a>
-        </div>
-    </div>
     @endforelse
 
 </x-layout>
