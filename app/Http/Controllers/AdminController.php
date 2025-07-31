@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -21,6 +23,9 @@ class AdminController extends Controller
     }
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $latestJobs = Job::take(3)->latest()->get();
+        $latestusers = User::take(3)->latest()->get();
+        $latestapllied = JobApplication::take(3)->latest()->get();
+        return view('admin.dashboard',compact('latestJobs','latestusers','latestapllied'));
     }
 }

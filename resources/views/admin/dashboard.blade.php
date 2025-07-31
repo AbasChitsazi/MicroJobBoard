@@ -1,7 +1,7 @@
 <x-admin-component.dashboard>
     <x-admin-component.breadcrumbs class="mb-4" :links="['Dashboard' => route('admin.dashboard')]" />
 
-    <x-card class="p-6">
+    <x-card class="">
         <h2 class="text-xl font-semibold mb-4">Dashboard Summary</h2>
 
         <div>
@@ -16,41 +16,26 @@
                                 <th class="px-4 py-2">Title</th>
                                 <th class="px-4 py-2">Location</th>
                                 <th class="px-4 py-2">Salary</th>
+                                <th class="px-4 py-2">Created At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Google</td>
-                                <td class="px-4 py-2">Frontend Developer</td>
-                                <td class="px-4 py-2">New York</td>
-                                <td class="px-4 py-2">15000</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Amazon</td>
-                                <td class="px-4 py-2">Backend Developer</td>
-                                <td class="px-4 py-2">New York</td>
-                                <td class="px-4 py-2">15000</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Amazon</td>
-                                <td class="px-4 py-2">Backend Developer</td>
-                                <td class="px-4 py-2">New York</td>
-                                <td class="px-4 py-2">15000</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Amazon</td>
-                                <td class="px-4 py-2">Backend Developer</td>
-                                <td class="px-4 py-2">New York</td>
-                                <td class="px-4 py-2">15000</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Amazon</td>
-                                <td class="px-4 py-2">Backend Developer</td>
-                                <td class="px-4 py-2">New York</td>
-                                <td class="px-4 py-2">15000</td>
-                            </tr>
+                            @foreach ($latestJobs as $jobs)
+                                <tr class="hover:bg-gray-50 text-xs cursor-pointer">
+                                    <td class="px-4 py-2">
+                                        <a href="{{ route('jobs.show', $jobs) }}" class="hover:underline">
+                                            {{ $jobs->employer->company_name }}
+                                        </a>
+                                    </td>
+                                    <td class="px-4 py-2">{{ $jobs->title }}</td>
+                                    <td class="px-4 py-2">{{ $jobs->location }}</td>
+                                    <td class="px-4 py-2">${{ number_format($jobs->salary) }}</td>
+                                    <td class="px-4 py-2">{{ $jobs->created_at->diffForHumans() }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
 
@@ -67,31 +52,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">John Doe</td>
-                                <td class="px-4 py-2">john@example.com</td>
-                                <td class="px-4 py-2">2 minutes ago</td>
+                            @forelse ($latestusers as $users)
+
+                            <tr class="hover:bg-gray-50 text-xs">
+                                <td class="px-4 py-2">{{$users->name}}</td>
+                                <td class="px-4 py-2">{{$users->email}}</td>
+                                <td class="px-4 py-2">{{$users->created_at->diffForHumans()}}</td>
                             </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Jane Smith</td>
-                                <td class="px-4 py-2">jane@example.com</td>
-                                <td class="px-4 py-2">5 hours ago</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Jane Smith</td>
-                                <td class="px-4 py-2">jane@example.com</td>
-                                <td class="px-4 py-2">5 hours ago</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Jane Smith</td>
-                                <td class="px-4 py-2">jane@example.com</td>
-                                <td class="px-4 py-2">5 hours ago</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">Jane Smith</td>
-                                <td class="px-4 py-2">jane@example.com</td>
-                                <td class="px-4 py-2">5 hours ago</td>
-                            </tr>
+                            @empty
+                            No user sign up yet
+                            @endforelse
+
                         </tbody>
                     </table>
                 </div>
@@ -111,36 +82,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">UI Designer</td>
-                                <td class="px-4 py-2">Ali Reza</td>
-                                <td class="px-4 py-2">10000</td>
-                                <td class="px-4 py-2">Approved</td>
+                            @forelse ($latestapllied as $application)
+                            <tr class="hover:bg-gray-50 text-xs">
+                                <td class="px-4 py-2">{{$application->job->title}}</td>
+                                <td class="px-4 py-2">{{$application->user->name}}</td>
+                                <td class="px-4 py-2">${{number_format($application->expected_salary)}}</td>
+                                <td class="px-4 py-2">{{$application->is_approved === null ?  'Pending' : ($application->is_approved == 1 ? 'approved' : 'decline') }}</td>
                             </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">DevOps Engineer</td>
-                                <td class="px-4 py-2">Sara Ahmad</td>
-                                <td class="px-4 py-2">10000</td>
-                                <td class="px-4 py-2">pending</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">DevOps Engineer</td>
-                                <td class="px-4 py-2">Sara Ahmad</td>
-                                <td class="px-4 py-2">10000</td>
-                                <td class="px-4 py-2">pending</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">DevOps Engineer</td>
-                                <td class="px-4 py-2">Sara Ahmad</td>
-                                <td class="px-4 py-2">10000</td>
-                                <td class="px-4 py-2">pending</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2">DevOps Engineer</td>
-                                <td class="px-4 py-2">Sara Ahmad</td>
-                                <td class="px-4 py-2">10000</td>
-                                <td class="px-4 py-2">pending</td>
-                            </tr>
+
+                            @empty
+                            no job Application yet
+                            @endforelse
+
                         </tbody>
                     </table>
                 </div>
