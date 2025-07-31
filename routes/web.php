@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Models\JobApplication;
 use App\Http\Middleware\Employer;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\MyjobApplicationController;
+use App\Http\Middleware\RoleMiddleware;
 
 Route::get('', fn() => to_route('jobs.index'));
 
@@ -71,6 +73,24 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/sessions/{id}', [SessionController::class, 'destroy'])->name('sessions.destroy');
 });
+
+
+// admin login
+Route::get('panel', [AdminController::class, 'showLoginPage'])->name('admin.panel.show');
+Route::post('panel', [AdminController::class, 'login'])->name('admin.panel.login');
+
+Route::middleware(['auth','role:admin'])->group(function () {
+    Route::delete('logout-admin', fn() => to_route('admin.logout'))
+        ->name('logout-admin');
+
+    Route::delete('admin', [AdminController::class, 'destroy'])
+        ->name('admin.destroy');
+
+
+    
+});
+
+
 
 Route::fallback(function () {
     return response()->view('404.index', [], 404);

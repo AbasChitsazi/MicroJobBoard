@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        
     ];
 
     /**
@@ -57,5 +58,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(JobApplication::class);
     }
-    
+
 }
