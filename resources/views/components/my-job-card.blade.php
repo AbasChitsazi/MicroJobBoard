@@ -1,7 +1,7 @@
 <x-card class="mb-4 bg-white hover:shadow-md hover:scale-[1.01] transition-all duration-300 rounded-lg border border-slate-200">
     <div class="mb-4 flex justify-between items-start">
         <div>
-            <a href="{{ $job->deleted_at ? '#' : route('jobs.show', $job) }}">
+            <a href="{{ $job->deleted_at ? '#' : route('my-jobs.show', $job) }}">
                 @if ($job->deleted_at)
                     <div class="flex items-center space-x-2">
                         <h2 class="text-lg font-medium line-through text-red-400">{{ $job->title }}</h2>

@@ -18,64 +18,23 @@
     </div>
 
     @forelse ($jobs as $job)
-        <x-job-card :$job>
+        <x-my-job-card :$job>
             <div class="space-y-4 text-sm text-slate-700">
-                @forelse ($job->jobApplications as $application)
-                    <div class="rounded-lg border border-slate-200 p-4 hover:shadow-sm transition">
-                        <div class="flex flex-col gap-4">
-
-                            <div class="flex items-center justify-between">
-                                <div class="text-base font-semibold text-slate-800">
-                                    {{ $application->user->name }}
-                                </div>
-                                <div class="text-xs text-slate-500">
-                                    Applied {{ $application->created_at->diffForHumans() }}
-                                </div>
-                            </div>
-
-
-                            <div class="text-green-600 font-bold text-lg">
-                                ${{ number_format($application->expected_salary) }}
-                            </div>
-
-                            @if (!$job->deleted_at)
-                            <div class="flex items-center justify-between " data-id="{{ $application->id }}">
-                                <a href="{{ route('download-cv', $application) }}"
-                                    class="px-3 py-1 text-sm bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition">
-                                    Download CV
-                                </a>
-
-                                <div class="flex space-x-2 statusForm">
-                                    @if (is_null($application->is_approved))
-                                        <button type="button"
-                                            class="approveBtn px-3 py-1 text-sm cursor-pointer bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition"
-                                            value="1" data-job="{{ $application->id }}">
-                                            Approve
-                                        </button>
-                                        <button type="button"
-                                            class="declineBtn px-3 py-1 text-sm cursor-pointer bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                                            value="0" data-job="{{ $application->id }}">
-                                            Decline
-                                        </button>
-                                    @elseif ($application->is_approved == 1)
-                                        <div class="font-bold bg-white text-emerald-500">Approved</div>
-                                    @elseif ($application->is_approved == 0)
-                                        <div class="font-bold bg-white text-red-500">Declined</div>
-                                    @endif
-                                </div>
-                            </div>
-                            @endif
-
-                        </div>
-                    </div>
-                @empty
-                    <div class="text-gray-500 italic">No applications yet.</div>
-                @endforelse
 
 
                 @if (!$job->deleted_at)
-                    <div class="grid grid-cols-2 gap-2 w-full mt-4">
+                    <div class="grid grid-cols-3 gap-2 w-full mt-12">
 
+                        <a href="{{ route('my-jobs.show', $job) }}"
+                            class="w-full inline-flex cursor-pointer items-center justify-center gap-2 rounded-md bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-200 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+
+                            Show CV's
+                        </a>
                         <a href="{{ route('my-jobs.edit', $job) }}"
                             class="w-full inline-flex cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-200 transition">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -110,7 +69,7 @@
                     </div>
                 @endif
             </div>
-        </x-job-card>
+        </x-my-job-card>
     @empty
         <div class="text-center border-2 border-dashed border-slate-300  rounded-xl p-8 bg-slate-50">
             <div class="text-lg font-semibold text-slate-700 mb-2">No Jobs Yet</div>
@@ -121,58 +80,3 @@
         </div>
     @endforelse
 </x-layout>
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $(document).on('click', '.approveBtn, .declineBtn', function(e) {
-        e.preventDefault();
-
-        var is_approved = $(this).val();
-        var jobid = $(this).data('job');
-        var statusDiv = $(this).closest('.statusForm');
-        var clickedButton = $(this);
-
-        var originalText = clickedButton.text();
-        var originalOpacity = clickedButton.css('opacity');
-
-        clickedButton.prop('disabled', true);
-        clickedButton.css('opacity', '0.6');
-        clickedButton.text('Processing...');
-
-        $.ajax({
-            url: "{{ route('myjobs-status') }}",
-            type: "POST",
-            data: {
-                status: is_approved,
-                jobs: jobid
-            },
-            success: function(response) {
-
-                if (response.status === true) {
-                    if (parseInt(response.message) === 1) {
-                        statusDiv.html(
-                            "<div class='font-bold bg-white text-emerald-500'>Approved</div>");
-                    } else {
-                        statusDiv.html(
-                            "<div class='font-bold bg-white text-red-500'>Declined</div>");
-                    }
-                } else {
-
-                    clickedButton.prop('disabled', false);
-                    clickedButton.css('opacity', originalOpacity);
-                    clickedButton.text(originalText);
-                }
-            },
-            error: function(xhr) {
-                console.error(xhr.responseText);
-                clickedButton.prop('disabled', false);
-                clickedButton.css('opacity', originalOpacity);
-                clickedButton.text(originalText);
-            }
-        });
-    });
-</script>

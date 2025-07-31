@@ -143,4 +143,10 @@ class MyJobController extends Controller
         Mail::to($email)->queue(new SendStatuJobMail($jobApplication->is_approved,$jobApplication->job->title,$jobApplication->user->name));
 
     }
+    public function show(Job $my_job)
+    {
+         $this->authorize('viewOnlyEmployer', $my_job);
+
+        return view('my_job.show', ['job' => $my_job]);
+    }
 }

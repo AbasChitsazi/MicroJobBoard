@@ -21,6 +21,10 @@ class JobPolicy
     {
         return true;
     }
+    public function viewOnlyEmployer(User $user, Job $job): bool
+    {
+        return $user->id === $job->employer->user_id;
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -81,5 +85,5 @@ class JobPolicy
         return !$job->hasUserApplied($user) &&
             $job->employer?->user_id !== $user->id;
     }
-    
+
 }
