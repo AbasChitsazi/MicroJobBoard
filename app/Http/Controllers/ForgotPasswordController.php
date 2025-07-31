@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use App\Mail\PasswordResetMail;
+use App\Mail\SendAlertOnChangePasswordMail;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -116,7 +117,7 @@ class ForgotPasswordController extends Controller
             ->where('email', $request->email)
             ->delete();
 
-
-        return redirect()->route('auth.login')->with('success', 'Your password succeefully changed. Please Sign in');
+        Mail::to($request->email)->queue(new SendAlertOnChangePasswordMail($user->name));
+        return redirect()->route('login')->with('success', 'Your password succeefully changed. Please Sign in');
     }
 }

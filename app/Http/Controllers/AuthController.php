@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Session\Middleware\AuthenticateSession;
 
 class AuthController extends Controller
@@ -26,14 +28,26 @@ class AuthController extends Controller
             'email' => 'required|email|min:5|max:128',
             'password' => 'required'
         ]);
+
+        $key = Str::lower($request->input('email')) . '|' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            $seconds = RateLimiter::availableIn($key);
+            return back()->with('error', "Too many login attempts. Try again in {$seconds} seconds.");
+        }
+
         $credentials = $request->only('email', 'password');
         $remember = $request->filled('remember');
 
         if (Auth::attempt($credentials, $remember)) {
+            RateLimiter::clear($key);
             return redirect()->intended('/');
-        } else {
-            return redirect()->back()->with('error', 'Invalid Credentials!');
         }
+
+
+        RateLimiter::hit($key, 300);
+
+        return redirect()->back()->with('error', 'Invalid Credentials!');
     }
     public function showRegisterForm()
     {
@@ -95,7 +109,7 @@ class AuthController extends Controller
 
         if ($request->filled('new_password')) {
             if (!Hash::check($request->current_password, $user->password)) {
-                return redirect()->route('auth.profile.edit')->with('error','current password is invalid');
+                return redirect()->route('auth.profile.edit')->with('error', 'current password is invalid');
             }
 
             $user->password = Hash::make($request->new_password);
