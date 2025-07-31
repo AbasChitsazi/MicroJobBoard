@@ -67,5 +67,9 @@ class User extends Authenticatable
             });
         }
     }
-
+    public function getAvatarUrlAttribute()
+    {
+        $hash = md5(strtolower(trim($this->email)));
+        return "https://www.gravatar.com/avatar/{$hash}?s=200&d=mp";
+    }
 }

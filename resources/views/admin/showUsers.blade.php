@@ -2,7 +2,7 @@
     <x-admin-component.breadcrumbs class="mb-4" :links="['Users' => route('admin.users'), $user->name => '#']" />
 
     <x-card class="p-6">
-        <!-- User Header -->
+
         <div class="flex items-center justify-between b pb-6 mb-8">
             <div class="flex items-center space-x-4">
                 <img src="{{ $user->avatar_url ?? asset('images/profile.png') }}" alt="{{ $user->name }}"
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <!-- User Info Grid -->
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-gray-50 p-4 rounded-lg shadow  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-medium text-gray-700 mb-2">Basic Information</h3>
@@ -91,20 +91,20 @@
         </div>
 
 
-        <!-- Actions -->
+
         <div class="mt-6 flex justify-end space-x-2">
             <a href="{{ route('admin.users') }}"
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
                 Back
             </a>
-            <a href="{{route('admin.edit.user',$user)}}" class="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <a href="{{route('admin.edit.user',$user)}}" class="cursor-pointer px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500">
                 Edit
             </a>
             <form method="POST" action="{{route('admin.delete.user',$user)}}"
                 onsubmit="return confirm('Are you sure you want to delete this user?');">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class=" cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                <button type="submit" class=" cursor-pointer px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500">
                     Delete
                 </button>
             </form>

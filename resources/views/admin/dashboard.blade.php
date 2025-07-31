@@ -6,7 +6,7 @@
         <h2 class="text-xl font-semibold mb-4">Dashboard Summary</h2>
 
         <div>
-            <!-- Latest Jobs -->
+            
             <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100 hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">📌 Latest Jobs</h3>
                 <div class="overflow-x-auto">
@@ -41,15 +41,15 @@
             </div>
 
 
-            <!-- Latest Applied -->
+
             <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">📝 Latest Applied</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-600">
                         <thead>
                             <tr class="bg-gray-50 text-gray-700">
-                                <th class="px-4 py-2">Job</th>
                                 <th class="px-4 py-2">User</th>
+                                <th class="px-4 py-2">Job</th>
                                 <th class="px-4 py-2">Expected Salary</th>
                                 <th class="px-4 py-2">Satatus</th>
                             </tr>
@@ -57,8 +57,8 @@
                         <tbody>
                             @forelse ($latestapllied as $application)
                                 <tr class="hover:bg-gray-50 text-xs">
-                                    <td class="px-4 py-2">{{ $application->job->title }}</td>
                                     <td class="px-4 py-2">{{ $application->user->name }}</td>
+                                    <td class="px-4 py-2">{{ $application->job->title }}</td>
                                     <td class="px-4 py-2">${{ number_format($application->expected_salary) }}</td>
                                     <td class="px-4 py-2">
                                         {{ $application->is_approved === null ? 'Pending' : ($application->is_approved == 1 ? 'approved' : 'decline') }}
@@ -75,7 +75,7 @@
             </div>
 
 
-            <!-- Latest Signups -->
+
             <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">👤 Latest Signups</h3>
                 <div class="overflow-x-auto">
