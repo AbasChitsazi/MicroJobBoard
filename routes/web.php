@@ -43,8 +43,6 @@ Route::prefix('forgot')->group(function () {
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
 
-    Route::delete('logout', fn() => to_route('auth.destroy'))
-        ->name('logout');
 
     Route::delete('auth', [AuthController::class, 'destroy'])
         ->name('auth.destroy');
@@ -75,19 +73,14 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// admin login
-Route::get('panel', [AdminController::class, 'showLoginPage'])->name('admin.panel.show');
-Route::post('panel', [AdminController::class, 'login'])->name('admin.panel.login');
-
-Route::middleware(['auth','role:admin'])->group(function () {
-    Route::delete('logout-admin', fn() => to_route('admin.logout'))
-        ->name('logout-admin');
-
-    Route::delete('admin', [AdminController::class, 'destroy'])
-        ->name('admin.destroy');
 
 
-    
+Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
+
+
+    Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
+
+
 });
 
 
