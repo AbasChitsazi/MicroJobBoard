@@ -1,4 +1,5 @@
 <x-admin-component.dashboard>
+
     <x-admin-component.breadcrumbs class="mb-4" :links="['Dashboard' => route('admin.dashboard')]" />
 
     <x-card class="">
@@ -39,34 +40,6 @@
                 </div>
             </div>
 
-            <!-- Latest Signups -->
-            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100">
-                <h3 class="text-lg font-semibold mb-3 text-gray-800">👤 Latest Signups</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-600">
-                        <thead>
-                            <tr class="bg-gray-50 text-gray-700">
-                                <th class="px-4 py-2">Name</th>
-                                <th class="px-4 py-2">Email</th>
-                                <th class="px-4 py-2">Sign up At</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($latestusers as $users)
-
-                            <tr class="hover:bg-gray-50 text-xs">
-                                <td class="px-4 py-2">{{$users->name}}</td>
-                                <td class="px-4 py-2">{{$users->email}}</td>
-                                <td class="px-4 py-2">{{$users->created_at->diffForHumans()}}</td>
-                            </tr>
-                            @empty
-                            No user sign up yet
-                            @endforelse
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
             <!-- Latest Applied -->
             <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100">
@@ -83,15 +56,46 @@
                         </thead>
                         <tbody>
                             @forelse ($latestapllied as $application)
-                            <tr class="hover:bg-gray-50 text-xs">
-                                <td class="px-4 py-2">{{$application->job->title}}</td>
-                                <td class="px-4 py-2">{{$application->user->name}}</td>
-                                <td class="px-4 py-2">${{number_format($application->expected_salary)}}</td>
-                                <td class="px-4 py-2">{{$application->is_approved === null ?  'Pending' : ($application->is_approved == 1 ? 'approved' : 'decline') }}</td>
-                            </tr>
+                                <tr class="hover:bg-gray-50 text-xs">
+                                    <td class="px-4 py-2">{{ $application->job->title }}</td>
+                                    <td class="px-4 py-2">{{ $application->user->name }}</td>
+                                    <td class="px-4 py-2">${{ number_format($application->expected_salary) }}</td>
+                                    <td class="px-4 py-2">
+                                        {{ $application->is_approved === null ? 'Pending' : ($application->is_approved == 1 ? 'approved' : 'decline') }}
+                                    </td>
+                                </tr>
 
                             @empty
-                            no job Application yet
+                                no job Application yet
+                            @endforelse
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Latest Signups -->
+            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100">
+                <h3 class="text-lg font-semibold mb-3 text-gray-800">👤 Latest Signups</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-700">
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Email</th>
+                                <th class="px-4 py-2">Sign up At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($latestusers as $users)
+                                <tr class="hover:bg-gray-50 text-xs">
+                                    <td class="px-4 py-2">{{ $users->name }}</td>
+                                    <td class="px-4 py-2">{{ $users->email }}</td>
+                                    <td class="px-4 py-2">{{ $users->created_at->diffForHumans() }}</td>
+                                </tr>
+                            @empty
+                                No user sign up yet
                             @endforelse
 
                         </tbody>

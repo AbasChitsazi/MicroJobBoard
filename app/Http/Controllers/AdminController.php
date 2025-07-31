@@ -28,9 +28,22 @@ class AdminController extends Controller
         $latestapllied = JobApplication::take(3)->latest()->get();
         return view('admin.dashboard',compact('latestJobs','latestusers','latestapllied'));
     }
-    public function users()
-    {
-        $users = User::paginate(20);
-        return view('admin.users',compact('users'));
-    }
+    public function users(Request $request)
+{
+    $filter = $request->query('filter');
+
+    $users = User::query()
+        ->when($filter === 'employer', function ($query) {
+            $query->whereHas('employer');
+        })
+        ->when($filter === 'jobseeker', function ($query) {
+            $query->whereDoesntHave('employer');
+        })
+        ->paginate(20)
+        ->withQueryString(); 
+
+    return view('admin.users', compact('users', 'filter'));
+}
+
+
 }
