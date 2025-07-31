@@ -80,7 +80,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
 
     Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
     Route::get('users',[AdminController::class,'users'])->name('admin.users');
-
+    Route::get('users/{user}',[AdminController::class,'showUser'])->name('admin.show.user');
 
 });
 

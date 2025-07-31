@@ -24,7 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        
+
     ];
 
     /**
@@ -57,6 +57,15 @@ class User extends Authenticatable
     public function jobApplications(): HasMany
     {
         return $this->hasMany(JobApplication::class);
+    }
+    public function scopeFilter($query, $search)
+    {
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
     }
 
 }
