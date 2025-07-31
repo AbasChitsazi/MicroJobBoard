@@ -70,6 +70,9 @@ class MyJobController extends Controller
 
     public function edit(Job $myJob)
     {
+        if ($myJob->jobApplications()->count() > 0) {
+            return redirect()->route('my-jobs.index')->with('error', "You cannot edit a job with applications");
+        }
         $this->authorize('update', $myJob);
 
         return view('my_job.edit', ['job' => $myJob]);
@@ -77,12 +80,13 @@ class MyJobController extends Controller
 
     public function update(JobRequest $request, Job $myJob)
     {
+
         $this->authorize('update', $myJob);
 
         $validated_data = $request->validated();
         $myJob->update($validated_data);
 
-        return redirect()->route('my-jobs.index')->with('success', 'Job updated successfully');
+        return redirect()->route('my-jobs.index')->with('success', "Job {$myJob->title} updated successfully");
     }
     public function destroy(Job $myJob)
     {
@@ -119,7 +123,7 @@ class MyJobController extends Controller
             ], 422);
         }
         $jobApplication = JobApplication::findOrFail($request->jobs);
-        if(!is_null($jobApplication->is_approved)){
+        if (!is_null($jobApplication->is_approved)) {
             return response()->json([
                 'status'  => false,
                 'message' => 'this job have status',
@@ -140,12 +144,11 @@ class MyJobController extends Controller
     {
         $email = $jobApplication->user?->email;
 
-        Mail::to($email)->queue(new SendStatuJobMail($jobApplication->is_approved,$jobApplication->job->title,$jobApplication->user->name));
-
+        Mail::to($email)->queue(new SendStatuJobMail($jobApplication->is_approved, $jobApplication->job->title, $jobApplication->user->name));
     }
     public function show(Job $my_job)
     {
-         $this->authorize('viewOnlyEmployer', $my_job);
+        $this->authorize('viewOnlyEmployer', $my_job);
 
         return view('my_job.show', ['job' => $my_job]);
     }

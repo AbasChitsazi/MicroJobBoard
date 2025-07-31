@@ -45,16 +45,18 @@ class JobPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Job $job): bool|Response
+    // Policy
+    public function update(User $user, Job $job): bool
     {
         if ($job->employer->user_id !== $user->id) {
             return false;
         }
         if ($job->jobApplications()->count() > 0) {
-            return Response::deny('Cannot change the job with applications');
+            return false;
         }
         return true;
     }
+
 
     /**
      * Determine whether the user can delete the model.
@@ -85,5 +87,4 @@ class JobPolicy
         return !$job->hasUserApplied($user) &&
             $job->employer?->user_id !== $user->id;
     }
-
 }

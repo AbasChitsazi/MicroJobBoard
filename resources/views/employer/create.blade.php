@@ -6,7 +6,7 @@
                 <x-label for="company_name" :required="true">Company Name</x-label>
                 <x-text-input name="company_name"/>
             </div>
-            <x-button type="submit" class="w-full">Create</x-button>
+            <x-button type="submit" class="w-full cursor-pointer">Create</x-button>
         </form>
     </x-card>
 </x-layout>
