@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between b pb-6 mb-8">
             <div class="flex items-center space-x-4">
                 <img src="{{ $user->avatar_url ?? asset('images/profile.png') }}" alt="{{ $user->name }}"
-                    class="w-16 h-16 rounded-full border">
+                    class="w-16 h-16 rounded-full shadow-lg">
                 <div>
                     <h2 class="text-2xl font-semibold text-gray-800">{{ $user->name }}</h2>
                     <p class="text-sm text-gray-500">{{ $user->email }}</p>
@@ -33,7 +33,7 @@
                 <p><span class="font-semibold">Name:</span> {{ $user->name }}</p>
                 <p><span class="font-semibold">Email:</span> {{ $user->email }}</p>
                 <p><span class="font-semibold">Joined:</span> {{ $user->created_at->format('d M Y') }}</p>
-                <p><span class="font-semibold">Last Login:</span>
+                <p><span class="font-semibold">Last Activity:</span>
                     <span class="">{{ $user->updated_at->diffForHumans() }}</span>
                 </p>
             </div>
@@ -97,14 +97,14 @@
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
                 Back
             </a>
-            <a href="{{route('auth.profile.edit')}}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <a href="{{route('admin.edit.user',$user)}}" class="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 Edit
             </a>
-            <form method="POST" action=""
+            <form method="POST" action="{{route('admin.delete.user',$user)}}"
                 onsubmit="return confirm('Are you sure you want to delete this user?');">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                <button type="submit" class=" cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                     Delete
                 </button>
             </form>

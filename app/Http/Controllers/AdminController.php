@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use App\Models\JobApplication;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\JobApplication;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 
 class AdminController extends Controller
@@ -48,5 +49,35 @@ class AdminController extends Controller
 
         return view('admin.showUsers', compact('user'));
     }
-    
+    public function showEditUser(User $user)
+    {
+        return view('admin.editUsers', compact('user'));
+    }
+    public function UpdateUser(Request $request, User $user)
+    {
+
+        $validData = $request->validate([
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8|confirmed',
+        ]);
+
+        if (!empty($validData['password'])) {
+            $user->password = Hash::make($validData['password']);
+        }
+
+        $user->name = $validData['name'];
+        $user->email = $validData['email'];
+
+        $user->save();
+
+        return redirect()->route('admin.show.user', $user)->with('success', "{$user->name} Updated Successfully");
+    }
+    public function deleteUser(User $user)
+    {
+        
+        $user->delete();
+
+        return redirect()->route('admin.users')->with('success', 'User Deleted Successfully');
+    }
 }
