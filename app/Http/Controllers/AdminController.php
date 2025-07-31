@@ -28,4 +28,9 @@ class AdminController extends Controller
         $latestapllied = JobApplication::take(3)->latest()->get();
         return view('admin.dashboard',compact('latestJobs','latestusers','latestapllied'));
     }
+    public function users()
+    {
+        $users = User::paginate(20);
+        return view('admin.users',compact('users'));
+    }
 }
