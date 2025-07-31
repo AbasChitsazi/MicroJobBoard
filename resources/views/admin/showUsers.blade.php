@@ -28,7 +28,7 @@
 
         <!-- User Info Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+            <div class="bg-gray-50 p-4 rounded-lg shadow  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-medium text-gray-700 mb-2">Basic Information</h3>
                 <p><span class="font-semibold">Name:</span> {{ $user->name }}</p>
                 <p><span class="font-semibold">Email:</span> {{ $user->email }}</p>
@@ -38,7 +38,7 @@
                 </p>
             </div>
 
-            <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+            <div class="bg-gray-50 p-4 rounded-lg shadow  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-medium text-gray-700 mb-2">Additional Details</h3>
                 @if ($user->employer)
                     <div class="bg-green-100 text-green-700 p-2 rounded-md">
@@ -55,7 +55,7 @@
                 @endif
             </div>
         </div>
-        <div class="w-full bg-gray-50 p-4 rounded-lg shadow-md mt-5">
+        <div class="w-full bg-gray-50 p-4 rounded-lg shadow mt-5  hover:shadow-md transition 500 hover:scale-[1.01] ">
             <h3 class="text-lg font-medium text-gray-700 mb-3">Last Activity</h3>
 
             @if ($user->employer && $user->employer->jobs->count() > 0)

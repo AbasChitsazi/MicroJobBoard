@@ -7,7 +7,7 @@
 
         <div>
             <!-- Latest Jobs -->
-            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100">
+            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100 hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">📌 Latest Jobs</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-600">
@@ -42,7 +42,7 @@
 
 
             <!-- Latest Applied -->
-            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100">
+            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">📝 Latest Applied</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-600">
@@ -76,7 +76,7 @@
 
 
             <!-- Latest Signups -->
-            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100">
+            <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100  hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">👤 Latest Signups</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-600">
