@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\VerifyCode;
 use Illuminate\Support\Str;
+use App\Mail\SendVerifyCode;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Session\Middleware\AuthenticateSession;
 
@@ -58,13 +61,14 @@ class AuthController extends Controller
         $validated_data = $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email|min:5|max:128',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $created_user = User::create([
             'name' => $validated_data['name'],
             'email' => $validated_data['email'],
-            'password' => Hash::make($validated_data['password'])
+            'password' => Hash::make($validated_data['password']),
+            'role' => 'user'
         ]);
         if ($created_user) {
             Auth::login($created_user);
@@ -144,5 +148,37 @@ class AuthController extends Controller
             ->update(['company_name' => $validData['company_name']]);
 
         return redirect()->route('auth.profile')->with('success', 'Company name updated successfully');
+    }
+
+    public function verifyEmail()
+    {
+        $user = auth()->user();
+        $key = 'verify-email:' . $user->id;
+
+        if (RateLimiter::tooManyAttempts($key, 3)) {
+            $seconds = RateLimiter::availableIn($key);
+            return back()->with('error', "Please wait {$seconds} seconds before requesting another code.");
+        }
+
+        $verifyCode = VerifyCode::where('user_id', $user->id)->first();
+
+        if (!$verifyCode || $verifyCode->created_at->lt(now()->subMinutes(5))) {
+            $code = rand(100000, 999999);
+
+            VerifyCode::updateOrCreate(
+                ['user_id' => $user->id],
+                ['code' => $code, 'created_at' => now()]
+            );
+
+            RateLimiter::hit($key, 300);
+
+            // Mail::to($user->email)->queue(new SendVerifyCode($user->name, $code));
+
+            return view('auth.verify.email', ['success' => 'Code sent to your email']);
+        }
+
+        RateLimiter::hit($key, 300);
+
+        return view('auth.verify.email', ['success' => 'Code already sent to your email']);
     }
 }

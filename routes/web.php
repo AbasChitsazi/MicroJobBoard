@@ -70,6 +70,8 @@ Route::middleware('auth')->group(function () {
     Route::post('profile/edit-company', [AuthController::class, 'updateCompany'])->name('auth.company.update');
 
     Route::delete('/sessions/{id}', [SessionController::class, 'destroy'])->name('sessions.destroy');
+
+    Route::get('verify/email',[AuthController::class,'verifyEmail'])->name('auth.verify.email');
 });
 
 
