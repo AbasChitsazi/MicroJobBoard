@@ -16,6 +16,7 @@ class EmployerController extends Controller
         if (!auth()->user()->can('is_verified', auth()->user())) {
             return redirect()->route('auth.profile')->with('error', 'Please verify your email before creating a job.');
         }
+        $this->authorize('is_verified', auth()->user());
 
         $this->authorize('create', Employer::class);
         return view('employer.create');

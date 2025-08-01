@@ -10,6 +10,8 @@
                     <select name="filter" onchange="this.form.submit()"
                         class="px-2 py-1 border border-gray-500 rounded-md text-sm text-gray-700 focus:outline-none focus:ring focus:ring-emerald-300">
                         <option value="" {{ request('filter') === null ? 'selected' : '' }}>All</option>
+                        <option value="admin" {{ request('filter') === 'admin' ? 'selected' : '' }}>Admin
+                        </option>
                         <option value="employer" {{ request('filter') === 'employer' ? 'selected' : '' }}>Employer
                         </option>
                         <option value="jobseeker" {{ request('filter') === 'jobseeker' ? 'selected' : '' }}>
@@ -60,7 +62,7 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                        <tr class="hover:bg-gray-100 border-b border-gray-200 text-xs cursor-pointer">
+                        <tr class="hover:bg-gray-100 border-b border-gray-200 text-xs cursor-pointer ">
                             <td class="px-4 py-2">
                                 <img  src="{{ $user->avatar_url }}" alt="Profile picture" class="object-cover rounded-full w-10 h-10" />
                             </td>
@@ -70,7 +72,7 @@
                                 </a></td>
                             <td class="px-4 py-2">{{ $user->email }}</td>
 
-                            <td class="px-4 py-2">{{ $user->jobApplications->count() ?? 0 }}</td>
+                            <td class="px-4 py-2">{{ $user->jobApplications->count() ? $user->jobApplications->count() : '-' }}</td>
                             <td class="px-4 py-2">{{ $user->employer?->jobs->count() ?? '-' }}</td>
                             <td class="px-4 py-2">{{ $user->created_at->diffForHumans() }}</td>
                         </tr>

@@ -11,8 +11,14 @@
                     <h2 class="text-2xl font-semibold text-gray-800">{{ $user->name }}</h2>
                     <div class="flex items-center">
                         <p class="text-sm text-gray-500">{{ $user->email }}</p>
-                    <p class="text-xs ml-5 border border-md rounded-2xl px-2 h-fit {{$user->is_verified || $user->role === 'admin' ? 'border-green-700 bg-green-300 text-green-700' : 'border-red-700 bg-red-300 text-red-700'}}">{{$user->is_verified || $user->role === 'admin' ? 'verified' : 'unverified'}}</p>
-
+                        <p
+                            class="text-xs ml-5 border border-md rounded-2xl px-2 h-fit {{ $user->is_verified || $user->role === 'admin' ? 'border-green-700 bg-green-300 text-green-700' : 'border-red-700 bg-red-300 text-red-700' }}">
+                            {{ $user->is_verified || $user->role === 'admin' ? 'verified' : 'unverified' }}</p>
+                        @if (auth()->user()->role == 'admin')
+                            <p
+                                class="text-xs ml-1 border border-md rounded-2xl px-2 h-fit border-yellow-700 bg-yellow-300 text-yellow-700">
+                                admin</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -68,7 +74,7 @@
                     <ul class="space-y-2">
                         @foreach ($user->employer->jobs->take(3) as $job)
                             <li class="flex justify-between items-center bg-white p-2 rounded shadow-md">
-                                <span>{{ $job->title }}</span>
+                                <span>{{ $job->title ?? '- Job Deleted -' }}</span>
                                 <span class="text-xs text-gray-500">{{ $job->created_at->diffForHumans() }}</span>
                             </li>
                         @endforeach
@@ -82,7 +88,7 @@
                     <ul class="space-y-2">
                         @foreach ($user->jobApplications->take(3) as $application)
                             <li class="flex justify-between items-center bg-white p-2 rounded shadow-md">
-                                <span>{{ $application->job->title }}</span>
+                                <span>{{ $application->job?->title ?? '- Job Deleted -' }}</span>
                                 <span
                                     class="text-xs text-gray-500">{{ $application->created_at->diffForHumans() }}</span>
                             </li>
@@ -91,7 +97,7 @@
                 </div>
             @endif
 
-            </div>
+        </div>
         </div>
 
 
@@ -101,14 +107,16 @@
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
                 Back
             </a>
-            <a href="{{route('admin.edit.user',$user)}}" class="cursor-pointer px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500">
+            <a href="{{ route('admin.edit.user', $user) }}"
+                class="cursor-pointer px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500">
                 Edit
             </a>
-            <form method="POST" action="{{route('admin.delete.user',$user)}}"
+            <form method="POST" action="{{ route('admin.delete.user', $user) }}"
                 onsubmit="return confirm('Are you sure you want to delete this user?');">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class=" cursor-pointer px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500">
+                <button type="submit"
+                    class=" cursor-pointer px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500">
                     Delete
                 </button>
             </form>

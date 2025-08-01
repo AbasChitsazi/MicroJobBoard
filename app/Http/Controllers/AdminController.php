@@ -37,7 +37,8 @@ class AdminController extends Controller
 
         $users = User::query()
             ->when($filter === 'employer', fn($query) => $query->whereHas('employer'))
-            ->when($filter === 'jobseeker', fn($query) => $query->whereDoesntHave('employer'))
+            ->when($filter === 'jobseeker', fn($query) => $query->whereHas('jobApplications'))
+            ->when($filter === 'admin', fn($query) => $query->where('role','admin'))
             ->filter($search)
             ->paginate(20)
             ->withQueryString();
@@ -75,7 +76,7 @@ class AdminController extends Controller
     }
     public function deleteUser(User $user)
     {
-        
+
         $user->delete();
 
         return redirect()->route('admin.users')->with('success', 'User Deleted Successfully');
