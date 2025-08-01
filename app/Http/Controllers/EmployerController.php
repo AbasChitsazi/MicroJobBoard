@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 
@@ -12,16 +13,17 @@ class EmployerController extends Controller
 
     public function create()
     {
-        if (!auth()->user()->can('is_verified')) {
-    return redirect()->route('auth.profile')->with('error', 'For Access to Create Your Own Job Plaese Verify Your Email');
-}
+        if (!auth()->user()->can('is_verified', auth()->user())) {
+            return redirect()->route('auth.profile')->with('error', 'Please verify your email before creating a job.');
+        }
+
         $this->authorize('create', Employer::class);
         return view('employer.create');
     }
 
     public function store(Request $request)
     {
-        $this->authorize('is_verified');
+        $this->authorize('is_verified', auth()->user());
         $this->authorize('create', Employer::class);
 
         auth()->user()->employer()->create(
@@ -30,6 +32,6 @@ class EmployerController extends Controller
             ])
         );
 
-        return redirect()->route('my-jobs.index')->with('success','Your employer account was created!');
+        return redirect()->route('my-jobs.index')->with('success', 'Your employer account was created!');
     }
 }

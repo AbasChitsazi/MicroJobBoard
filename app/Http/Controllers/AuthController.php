@@ -150,35 +150,72 @@ class AuthController extends Controller
         return redirect()->route('auth.profile')->with('success', 'Company name updated successfully');
     }
 
-    public function verifyEmail()
+    public function showVerifyEmail()
+    {
+        return view('auth.verify.email');
+    }
+
+    public function SendVerifyEmail()
     {
         $user = auth()->user();
-        $key = 'verify-email:' . $user->id;
+        $key = 'send-verify-link:' . $user->id;
 
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $seconds = RateLimiter::availableIn($key);
-            return back()->with('error', "Please wait {$seconds} seconds before requesting another code.");
+            return back()->with('error', "Please wait {$seconds} seconds before another verify request.");
         }
 
-        $verifyCode = VerifyCode::where('user_id', $user->id)->first();
+        $verify_data = VerifyCode::where([
+            ['email', '=', $user->email],
+            ['user_id', '=', $user->id]
+        ])->first();
 
-        if (!$verifyCode || $verifyCode->created_at->lt(now()->subMinutes(5))) {
-            $code = rand(100000, 999999);
+        if (!$verify_data || $verify_data->created_at->lt(now()->subMinutes(5))) {
+
+            $hash = Str::random(64);
 
             VerifyCode::updateOrCreate(
                 ['user_id' => $user->id],
-                ['code' => $code, 'created_at' => now()]
+                [
+                    'email' => $user->email,
+                    'hash' => $hash,
+                    'created_at' => now(),
+                ]
             );
 
             RateLimiter::hit($key, 300);
 
-            // Mail::to($user->email)->queue(new SendVerifyCode($user->name, $code));
-
-            return view('auth.verify.email', ['success' => 'Code sent to your email']);
+            Mail::to($user->email)->queue(new SendVerifyCode($user->name, $user->email, $hash));
+            return back()->with('success', "Verify link sent to your email.");
         }
 
         RateLimiter::hit($key, 300);
+        return back()->with('success', "Verify link already sent to your email.");
+    }
 
-        return view('auth.verify.email', ['success' => 'Code already sent to your email']);
+    public function verifyToken(Request $request, $hash)
+    {
+        $user = auth()->user();
+        $email = $request->query('email');
+
+        $verifyToken = VerifyCode::where([
+            ['email', '=', $email],
+            ['user_id', '=', $user->id],
+            ['hash', '=', $hash]
+        ])->first();
+
+        if (!$verifyToken) {
+            return redirect()->route('auth.profile')->with('error', 'Verify link is invalid');
+        }
+        if ($verifyToken->created_at->lt(now()->subMinutes(5))) {
+            return redirect()->route('auth.profile')
+                ->with('error', 'Link is Expired. Please try again to verify your email');
+        }
+
+        $user->update(['is_verified' => 1]);
+
+        $verifyToken->delete();
+
+        return redirect()->route('auth.profile')->with('success', 'Your email has been successfully verified.');
     }
 }

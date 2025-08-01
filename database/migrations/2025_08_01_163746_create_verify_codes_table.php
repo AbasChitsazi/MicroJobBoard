@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('verify_codes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('code');
+            $table->string('email');
+            $table->string('hash')->nullable();
             $table->timestamps();
         });
     }

@@ -16,23 +16,25 @@ class SendVerifyCode extends Mailable implements ShouldQueue
     use Queueable;
 
     public $name;
-    public $code;
+    public $email;
+    public $hash;
 
 
-    public function __construct($name, $code)
+    public function __construct($name, $email, $hash)
     {
         $this->name = $name;
-        $this->code = $code;
-
+        $this->email = $email;
+        $this->hash = $hash;
     }
 
     public function build()
     {
         return $this->subject('Verify Your Email')
-                    ->view('email.verify-email')
-                    ->with([
-                        'name' => $this->name,
-                        'code'    => $this->code,
-                    ]);
+            ->view('email.verify-email')
+            ->with([
+                'name' => $this->name,
+                'email'    => $this->email,
+                'hash'  => $this->hash
+            ]);
     }
 }

@@ -71,7 +71,8 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/sessions/{id}', [SessionController::class, 'destroy'])->name('sessions.destroy');
 
-    Route::get('verify/email',[AuthController::class,'verifyEmail'])->name('auth.verify.email');
+    Route::post('verify/email/send',[AuthController::class,'SendVerifyEmail'])->name('auth.verify.create.token');
+    Route::get('verify/{hash}', [AuthController::class, 'verifyToken'])->name('auth.verify.token');
 });
 
 

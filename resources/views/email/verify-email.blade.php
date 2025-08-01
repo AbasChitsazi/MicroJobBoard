@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Verify Your Email</title>
+    <title>Password Reset</title>
     <style>
         body {
             background: linear-gradient(to right, #e0e7ff 10%, #e0f2fe 30%, #d1fae5 90%);
@@ -18,14 +19,13 @@
             background: #ffffff;
             border-radius: 8px;
             padding: 24px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
             font-size: 24px;
             margin-bottom: 16px;
-            color: #059669;
+            color: #1e293b;
         }
 
         p {
@@ -33,32 +33,38 @@
             line-height: 1.6;
         }
 
-        .button {
+        a.button {
             display: inline-block;
             padding: 12px 20px;
+            background-color: #6366f1;
             color: white;
             text-decoration: none;
             border-radius: 6px;
             font-weight: bold;
-            background-color: #10b981;
         }
 
-        .button:hover {
-            background-color: #059669;
-        }
-
-        .note {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 20px;
+        a.button:hover {
+            background-color: #4f46e5;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>Verify Your Email</h1>
-        <p>Hello {{ $name }},</p>
-        <p>Your Verify Code is <b>{{$code}}<b></p>
+        <h1>Password Reset Request</h1>
+        <p>Hi, {{ $name }}</p>
+        <p>Plaese Verify Your Email With This Link</p>
+
+        <p>
+            <a href="{{ route('auth.verify.token', ['hash' => $hash, 'email' => $email]) }}"  class="button">
+                Verify Email
+            </a>
+        </p>
+
+        <h3>If button doesn't work click on the link below:</h3>
+        <p>{{ route('auth.verify.token', ['hash' => $hash]) }}?email={{ urlencode($email) }}</p>
+        <p>Made with ❤️</p>
     </div>
 </body>
+
 </html>

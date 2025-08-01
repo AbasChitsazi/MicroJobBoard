@@ -8,6 +8,7 @@ class VerifyCode extends Model
 {
     protected $fillable = [
         'user_id',
-        'code'
+        'email',
+        'hash',
     ];
 }

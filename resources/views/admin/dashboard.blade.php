@@ -6,7 +6,7 @@
         <h2 class="text-xl font-semibold mb-4">Dashboard Summary</h2>
 
         <div>
-            
+
             <div class="bg-white rounded-xl mb-8 shadow p-4 border border-gray-100 hover:shadow-md transition 500 hover:scale-[1.01] ">
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">📌 Latest Jobs</h3>
                 <div class="overflow-x-auto">
@@ -90,8 +90,8 @@
                         <tbody>
                             @forelse ($latestusers as $users)
                                 <tr class="hover:bg-gray-50 text-xs">
-                                    <td class="px-4 py-2">{{ $users->name }}</td>
-                                    <td class="px-4 py-2">{{ $users->email }}</td>
+                                    <td class="px-4 py-2"><a href="{{route('admin.show.user',$users)}}">{{ $users->name }}</a></td>
+                                    <td class="px-4 py-2"><a href="{{route('admin.show.user',$users)}}">{{ $users->email }}</a></td>
                                     <td class="px-4 py-2">{{ $users->created_at->diffForHumans() }}</td>
                                 </tr>
                             @empty

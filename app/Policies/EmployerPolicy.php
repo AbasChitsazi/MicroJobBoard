@@ -63,8 +63,5 @@ class EmployerPolicy
     {
         return false;
     }
-    public function is_verified(User $user)
-    {
-        return $user->is_verified;
-    }
+   
 }
