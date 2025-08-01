@@ -67,4 +67,5 @@ class JobApplicationPolicy
     {
         return false;
     }
+    
 }

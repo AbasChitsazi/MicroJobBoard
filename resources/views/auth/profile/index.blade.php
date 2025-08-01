@@ -13,11 +13,19 @@
             </div>
             <div>
                 <p class="text-xl font-semibold text-gray-700">{{ auth()->user()->name }}</p>
-                <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
+                <div class="flex items-center">
+                    <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
+                    <p class="text-xs ml-5 border border-md rounded-2xl px-2 h-fit {{auth()->user()->is_verified || auth()->user()->role === 'admin' ? 'border-green-700 bg-green-300 text-green-700' : 'border-red-700 bg-red-300 text-red-700'}}">{{auth()->user()->is_verified || auth()->user()->role === 'admin' ? 'verified' : 'unverified'}}</p>
+                </div>
             </div>
         </div>
+        <div>
+            @if (!(auth()->user()->is_verified) && auth()->user()->role != 'admin')
+                <a href="" class="border rounded-md px-2 py-2 text-sm border-red-400 bg-red-100 text-red-400" >Verify Your Email</a>
+            @endif
+        </div>
 
-        <div class="border-t border-gray-200 pt-8">
+        <div class="border-t  border-gray-200 pt-6">
             <h3 class="text-xl font-bold text-gray-800 mb-6">Your Job Statistics</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <a href="{{ route('my-job-applications.index') }}" class="group block rounded-lg border border-gray-200 p-6 bg-gradient-to-br from-white to-gray-50 hover:shadow-lg transition duration-300">

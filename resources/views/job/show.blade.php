@@ -13,8 +13,12 @@
                 $isOwner = optional($job->employer)->user_id === auth()->id();
                 $alreadyApplied = $job->hasUserApplied(auth()->user());
             @endphp
-
-            @if ($isOwner)
+            @if(!(auth()->user()->is_verified))
+                <div
+                    class="text-center text-sm font-medium text-indigo-600 border-2 border-indigo-700 bg-indigo-100 rounded-md p-3">
+                    Please verify Your Email For Apply
+                </div>
+            @elseif ($isOwner)
                 <div
                     class="text-center text-sm font-medium text-yellow-600 border-2 border-yellow-700 bg-yellow-100 rounded-md p-3">
                     You cannot apply to your own job.

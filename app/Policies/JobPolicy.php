@@ -87,4 +87,8 @@ class JobPolicy
         return !$job->hasUserApplied($user) &&
             $job->employer?->user_id !== $user->id;
     }
+    public function is_verified(User $user):bool
+    {
+        return  $user->is_verified;
+    }
 }

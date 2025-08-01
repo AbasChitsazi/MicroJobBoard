@@ -9,7 +9,11 @@
                     class="w-16 h-16 rounded-full shadow-lg">
                 <div>
                     <h2 class="text-2xl font-semibold text-gray-800">{{ $user->name }}</h2>
-                    <p class="text-sm text-gray-500">{{ $user->email }}</p>
+                    <div class="flex items-center">
+                        <p class="text-sm text-gray-500">{{ $user->email }}</p>
+                    <p class="text-xs ml-5 border border-md rounded-2xl px-2 h-fit {{$user->is_verified || $user->role === 'admin' ? 'border-green-700 bg-green-300 text-green-700' : 'border-red-700 bg-red-300 text-red-700'}}">{{$user->is_verified || $user->role === 'admin' ? 'verified' : 'unverified'}}</p>
+
+                    </div>
                 </div>
             </div>
             <div>

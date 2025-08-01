@@ -18,31 +18,35 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Abbas',
             'email' => 'Chitsazi3@gmail.com',
+            'is_verified' => 1,
             'role' => 'admin'
         ]);
 
         \App\Models\User::factory(300)->create();
 
-        $users = \App\Models\User::all()->shuffle();
+        $verifiedUsers = \App\Models\User::where('is_verified', 1)->get()->shuffle();
 
         for ($i = 0; $i < 20; $i++) {
+            if ($verifiedUsers->isEmpty()) break;
+
             \App\Models\Employer::factory()->create([
-                'user_id'=> $users->pop()->id
+                'user_id' => $verifiedUsers->pop()->id
             ]);
         }
 
         $employers = \App\Models\Employer::all();
-        for ($i=0; $i < 100; $i++) {
+
+        for ($i = 0; $i < 100; $i++) {
             \App\Models\Job::factory()->create([
                 'employer_id' => $employers->random()->id
             ]);
         }
 
-        foreach ($users as $user) {
-            $jobs = \App\Models\Job::inRandomOrder()->take(rand(0,4))->get();
-            foreach($jobs as $job){
+        foreach (\App\Models\User::where('is_verified', 1)->get() as $user) {
+            $jobs = \App\Models\Job::inRandomOrder()->take(rand(0, 4))->get();
+            foreach ($jobs as $job) {
                 \App\Models\JobApplication::factory()->create([
-                    'job_id' =>$job->id,
+                    'job_id'  => $job->id,
                     'user_id' => $user->id,
                 ]);
             }

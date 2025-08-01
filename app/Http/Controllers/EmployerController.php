@@ -12,12 +12,16 @@ class EmployerController extends Controller
 
     public function create()
     {
+        if (!auth()->user()->can('is_verified')) {
+    return redirect()->route('auth.profile')->with('error', 'For Access to Create Your Own Job Plaese Verify Your Email');
+}
         $this->authorize('create', Employer::class);
         return view('employer.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('is_verified');
         $this->authorize('create', Employer::class);
 
         auth()->user()->employer()->create(
