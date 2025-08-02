@@ -27,7 +27,7 @@
                 </li>
                 <li class="">
                     <a href="{{ route('admin.dashboard') }}"
-                        class=" flex items-center text-left hover:text-cyan-600 transition duration-300 {{ request()->routeIs(['admin.dashboard', 'admin.users', 'admin.show.user', 'admin.edit.user','admin.application.index']) ? 'text-cyan-600 font-semibold underline' : '' }}">
+                        class=" flex items-center text-left hover:text-cyan-600 transition duration-300 {{ request()->routeIs(['admin.dashboard', 'admin.users', 'admin.show.user', 'admin.edit.user','admin.application.index','admin.setting.index']) ? 'text-cyan-600 font-semibold underline' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -78,8 +78,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('my-jobs.index') }}"
-                        class="flex items-center hover:text-sky-600 transition duration-300 {{ request()->routeIs(['my-jobs.index', 'my-jobs.create', 'my-jobs.show', 'employer.create']) ? 'text-sky-600 font-semibold underline' : '' }}">
+                    <a href="{{ route('admin.setting.index') }}"
+                        class="flex items-center hover:text-sky-600 transition duration-300 {{ request()->routeIs(['admin.setting.index']) ? 'text-sky-600 font-semibold underline' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5 mr-1">
                             <path stroke-linecap="round" stroke-linejoin="round"

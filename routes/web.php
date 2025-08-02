@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\ApplicationController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\JobsController;
+use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\JobApplicationController;
@@ -92,6 +93,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('lock/{user}',[UsersController::class,'toggleLock'])->name('admin.lock.user');
     Route::get('application',[ApplicationController::class,'index'])->name('admin.application.index');
     Route::get('jobs',[JobsController::class,'index'])->name('admin.jobs.index');
+    Route::get('settings',[SettingsController::class,'index'])->name('admin.setting.index');
+    Route::post('settings',[SettingsController::class,'store'])->name('admin.settings.create.admin');
 });
 
 
