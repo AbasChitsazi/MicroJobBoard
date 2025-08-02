@@ -5,7 +5,7 @@
 
         <div class="flex items-center justify-between pb-6 mb-8 border-b border-gray-200">
             <div class="flex items-center space-x-5">
-                <img src="{{ $user->avatar_url ?? asset('images/profile.png') }}" alt="{{ $user->name }}"
+                <img src="{{ asset('images/profile.png') }}" alt="{{ $user->name }}"
                     class="w-16 h-16 rounded-full shadow-lg object-cover">
 
                 <div>

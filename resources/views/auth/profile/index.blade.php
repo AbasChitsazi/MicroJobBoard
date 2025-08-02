@@ -9,7 +9,7 @@
 
         <div class="flex items-center space-x-6 mt-4">
             <div class="w-16 h-16 rounded-full bg-gray-200 border-2 border-white shadow flex items-center justify-center overflow-hidden">
-                <img src="{{ auth()->user()->avatar_url ?? asset('images/profile.png') }}" alt="Profile picture" class="object-cover w-full h-full" />
+                <img src="{{ asset('images/profile.png') }}" alt="Profile picture" class="object-cover w-full h-full" />
             </div>
             <div>
                 <p class="text-xl font-semibold text-gray-700">{{ auth()->user()->name }}</p>
