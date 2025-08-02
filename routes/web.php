@@ -8,6 +8,7 @@ use App\Http\Controllers\MyJobController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\ApplicationController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -88,6 +89,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('users/{user}/update', [UsersController::class, 'UpdateUser'])->name('admin.update.user');
     Route::delete('users/{user}/delete', [UsersController::class, 'deleteUser'])->name('admin.delete.user');
     Route::post('lock/{user}',[UsersController::class,'toggleLock'])->name('admin.lock.user');
+    Route::get('application',[ApplicationController::class,'index'])->name('admin.application.index');
 });
 
 

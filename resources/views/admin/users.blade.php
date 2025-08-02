@@ -4,7 +4,6 @@
             <x-admin-component.breadcrumbs class="mb-4" :links="['Users' => route('admin.users')]" />
         </div>
         <div class="mb-3 flex items-center justify-between">
-
             <div class="ml-5">
                 <form method="GET" action="{{ route('admin.users') }}">
                     <select name="filter" onchange="this.form.submit()"
@@ -19,12 +18,10 @@
                     </select>
                 </form>
             </div>
-            <div></div>
         </div>
-
-
     </div>
-    </div> <x-card>
+
+    <x-card>
         <div class="flex items-center justify-between">
             <div>
                 <h3 class="text-lg font-semibold mb-3 text-gray-800">👤 Users</h3>

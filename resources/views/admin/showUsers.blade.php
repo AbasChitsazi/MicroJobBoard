@@ -111,22 +111,10 @@
 
 
 
-        <div class="mt-6 flex justify-end space-x-2">
-            <div
-                class="flex items-center cursor-pointer px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+        <div class="mt-6 flex justify-start space-x-2">
+            <div class="flex items-center cursor-pointer px-1.5 py-2.5 text-sm bg-blue-400 text-white rounded-lg hover:bg-blue-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                </svg>
-                <a href="{{ route('admin.users') }}" class="ml-0.5">
-                    Back
-                </a>
-
-            </div>
-            <div class="flex items-center cursor-pointer px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5">
+                    stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                 </svg>
@@ -140,10 +128,10 @@
                     @csrf
                     @method('DELETE')
                     <div
-                        class="flex items-center cursor-pointer px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500">
+                        class="flex items-center cursor-pointer  px-1.5 py-2.5 text-sm bg-red-400 text-white rounded-lg hover:bg-red-500">
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
+                            stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16
                                           19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0
                                           1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0
@@ -163,7 +151,7 @@
                     @csrf
                     @if ($user->is_locked)
                         <div
-                            class="flex items-center  cursor-pointer px-4 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500">
+                            class="flex items-center  cursor-pointer px-1.5 py-2.5 text-sm bg-orange-400 text-white rounded-lg hover:bg-orange-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -176,7 +164,7 @@
                         </div>
                     @else
                         <div
-                            class="flex items-center  cursor-pointer px-4 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500">
+                            class="flex items-center  cursor-pointer px-2 py-2.5 text-sm bg-orange-400 text-white rounded-lg hover:bg-orange-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -190,6 +178,18 @@
                     @endif
                 </form>
             @endif
+            <div
+                class="flex items-center cursor-pointer px-1.5 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                </svg>
+                <a href="{{ route('admin.users') }}" class="ml-0.5">
+                    Back
+                </a>
+
+            </div>
         </div>
     </x-card>
 </x-admin-component.dashboard>
