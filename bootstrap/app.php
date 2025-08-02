@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\CheckIfUserLocked;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
        $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
+        $middleware->appendToGroup('auth', CheckIfUserLocked::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
          $exceptions->render(function (NotFoundHttpException|ModelNotFoundException $e, $request) {

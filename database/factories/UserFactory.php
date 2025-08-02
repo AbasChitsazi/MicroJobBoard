@@ -27,8 +27,9 @@ class UserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => bcrypt('password'),
-            'is_verified' => $this->faker->boolean(30), 
-            'role' => 'user'
+            'is_verified' => $this->faker->boolean(30),
+            'role' => 'user',
+            'is_locked' => 0
         ];
     }
 }

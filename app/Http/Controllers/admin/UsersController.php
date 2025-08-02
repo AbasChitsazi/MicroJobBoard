@@ -1,34 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Models\Job;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\JobApplication;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\RateLimiter;
 
-class AdminController extends Controller
+class UsersController extends Controller
 {
-    public function destroy()
-    {
-        Auth::logout();
-
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-
-        return redirect('/panel');
-    }
-    public function dashboard()
-    {
-        $latestJobs = Job::take(3)->latest()->get();
-        $latestusers = User::take(3)->latest()->get();
-        $latestapllied = JobApplication::take(3)->latest()->get();
-        return view('admin.dashboard', compact('latestJobs', 'latestusers', 'latestapllied'));
-    }
     public function users(Request $request)
     {
 
@@ -38,7 +18,7 @@ class AdminController extends Controller
         $users = User::query()
             ->when($filter === 'employer', fn($query) => $query->whereHas('employer'))
             ->when($filter === 'jobseeker', fn($query) => $query->whereHas('jobApplications'))
-            ->when($filter === 'admin', fn($query) => $query->where('role','admin'))
+            ->when($filter === 'admin', fn($query) => $query->where('role', 'admin'))
             ->filter($search)
             ->paginate(20)
             ->withQueryString();
@@ -80,5 +60,16 @@ class AdminController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users')->with('success', 'User Deleted Successfully');
+    }
+    public function toggleLock(User $user)
+    {
+        $user->is_locked = ! $user->is_locked;
+        $user->save();
+
+        $message = $user->is_locked
+            ? 'User has been locked successfully.'
+            : 'User has been unlocked successfully.';
+
+        return back()->with('success', $message);
     }
 }

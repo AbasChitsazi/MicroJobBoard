@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Abbas',
             'email' => 'Chitsazi3@gmail.com',
             'is_verified' => 1,
-            'role' => 'admin'
+            'role' => 'admin',
+            'is_locked' => 0,
         ]);
 
         \App\Models\User::factory(300)->create();

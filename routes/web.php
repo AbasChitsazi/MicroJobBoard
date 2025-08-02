@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Models\JobApplication;
 use App\Http\Middleware\Employer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
@@ -9,10 +7,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MyJobController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\MyjobApplicationController;
-use App\Http\Middleware\RoleMiddleware;
 
 Route::get('', fn() => to_route('jobs.index'));
 
@@ -71,23 +71,23 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/sessions/{id}', [SessionController::class, 'destroy'])->name('sessions.destroy');
 
-    Route::post('verify/email/send',[AuthController::class,'SendVerifyEmail'])->name('auth.verify.create.token');
+    Route::post('verify/email/send', [AuthController::class, 'SendVerifyEmail'])->name('auth.verify.create.token');
     Route::get('verify/{hash}', [AuthController::class, 'verifyToken'])->name('auth.verify.token');
 });
 
 
 
 
-Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 
-    Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
-    Route::get('users',[AdminController::class,'users'])->name('admin.users');
-    Route::get('users/{user}',[AdminController::class,'showUser'])->name('admin.show.user');
-    Route::get('users/{user}/edit',[AdminController::class,'showEditUser'])->name('admin.edit.user');
-    Route::post('users/{user}/update',[AdminController::class,'UpdateUser'])->name('admin.update.user');
-    Route::delete('users/{user}/delete',[AdminController::class,'deleteUser'])->name('admin.delete.user');
-
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('users', [UsersController::class, 'users'])->name('admin.users');
+    Route::get('users/{user}', [UsersController::class, 'showUser'])->name('admin.show.user');
+    Route::get('users/{user}/edit', [UsersController::class, 'showEditUser'])->name('admin.edit.user');
+    Route::post('users/{user}/update', [UsersController::class, 'UpdateUser'])->name('admin.update.user');
+    Route::delete('users/{user}/delete', [UsersController::class, 'deleteUser'])->name('admin.delete.user');
+    Route::post('lock/{user}',[UsersController::class,'toggleLock'])->name('admin.lock.user');
 });
 
 

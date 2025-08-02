@@ -42,11 +42,19 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $remember = $request->filled('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::validate($credentials)) {
+            $user = \App\Models\User::where('email', $credentials['email'])->first();
+
+            if ($user && $user->is_locked) {
+                return back()->with('error', 'Your account is locked. Please contact support.');
+            }
+
+
+            Auth::attempt($credentials, $remember);
             RateLimiter::clear($key);
+
             return redirect()->intended('/');
         }
-
 
         RateLimiter::hit($key, 300);
 
@@ -62,13 +70,15 @@ class AuthController extends Controller
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email|min:5|max:128',
             'password' => 'required|min:6|confirmed',
+
         ]);
 
         $created_user = User::create([
             'name' => $validated_data['name'],
             'email' => $validated_data['email'],
             'password' => Hash::make($validated_data['password']),
-            'role' => 'user'
+            'role' => 'user',
+            'is_locked' => 0
         ]);
         if ($created_user) {
             Auth::login($created_user);

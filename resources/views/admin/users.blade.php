@@ -64,15 +64,26 @@
                     @foreach ($users as $user)
                         <tr class="hover:bg-gray-100 border-b border-gray-200 text-xs cursor-pointer ">
                             <td class="px-4 py-2">
-                                <img  src="{{ $user->avatar_url }}" alt="Profile picture" class="object-cover rounded-full w-10 h-10" />
+                                <img src="{{ $user->avatar_url }}" alt="Profile picture"
+                                    class="object-cover rounded-full w-10 h-10" />
                             </td>
-                            <td class="px-4 py-2"><a class="text-black hover:underline"
-                                    href="{{ route('admin.show.user', $user) }}" class="text-blue-600 hover:underline">
-                                    {{ $user->name }}
-                                </a></td>
+                            <td class="px-4 py-2">
+                                <a href="{{ route('admin.show.user', $user) }}"
+                                    class="flex items-center gap-1 text-black hover:underline">
+                                    <span>{{ $user->name }}</span>
+                                    @if ($user->is_locked)
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                        </svg>
+                                    @endif
+                                </a>
+                            </td>
                             <td class="px-4 py-2">{{ $user->email }}</td>
 
-                            <td class="px-4 py-2">{{ $user->jobApplications->count() ? $user->jobApplications->count() : '-' }}</td>
+                            <td class="px-4 py-2">
+                                {{ $user->jobApplications->count() ? $user->jobApplications->count() : '-' }}</td>
                             <td class="px-4 py-2">{{ $user->employer?->jobs->count() ?? '-' }}</td>
                             <td class="px-4 py-2">{{ $user->created_at->diffForHumans() }}</td>
                         </tr>

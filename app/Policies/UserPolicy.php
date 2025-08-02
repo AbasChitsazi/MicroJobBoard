@@ -18,4 +18,8 @@ class UserPolicy
     {
         return (bool) $user->is_verified;
     }
+    public function is_locked(User $user)
+    {
+        return (bool) $user->is_locked;
+    }
 }
