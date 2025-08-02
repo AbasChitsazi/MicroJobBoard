@@ -10,6 +10,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\ApplicationController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\JobsController;
 use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\JobApplicationController;
@@ -90,6 +91,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::delete('users/{user}/delete', [UsersController::class, 'deleteUser'])->name('admin.delete.user');
     Route::post('lock/{user}',[UsersController::class,'toggleLock'])->name('admin.lock.user');
     Route::get('application',[ApplicationController::class,'index'])->name('admin.application.index');
+    Route::get('jobs',[JobsController::class,'index'])->name('admin.jobs.index');
 });
 
 
